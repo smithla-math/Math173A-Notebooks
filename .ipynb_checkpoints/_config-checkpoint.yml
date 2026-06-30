@@ -8,8 +8,6 @@ logo: letterfreq.png
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
-  exclude_patterns:
-  #  - 'Week?/*.ipynb'
   execute_notebooks: 'cache'
   allow_errors: true
   timeout: 200

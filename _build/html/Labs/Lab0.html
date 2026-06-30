@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 0 - Math 173A &#8212; UC Irvine Math 173A</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Labs/Lab0';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab 1 - Math 173A" href="Lab1.html" />
+    <link rel="prev" title="UC Irvine Math 173A Summer Session I 2026" href="../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/letterfreq.png" class="logo__image only-light" alt="UC Irvine Math 173A - Home"/>
+    <img src="../_static/letterfreq.png" class="logo__image only-dark pst-js-only" alt="UC Irvine Math 173A - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    UC Irvine Math 173A Summer Session I 2026
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 0 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab1.html">Lab 1 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab2.html">Lab 2 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab3.html">Lab 3 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab4.html">Lab 4 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab5.html">Lab 5 - Math 173A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Fast%20Powering.html">Fast Powering vs Naive Powering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Week1-Monday%20-%20Letter%20Frequency.html">Week 1 Monday - Letter Frequency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Week1-Friday%20-%20Vigenere.html">Week 1 Friday - Vigenère Cryptanalysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Week2-Wednesday%20-%20Discrete%20Log.html">Week 2 Wednesday - Discrete Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Week2-Friday.html">Week 2 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Z-KeyExchangeSpace.html">Key Exchange Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%203/Week%203%20Monday.html">Week 3 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%203/Week%203%20Wednesday.html">Week 3 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%204/Week4-Friday.html">Week 4 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205/Week5-Monday.html">Week 5 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205%20Wednesday/Week5-Wednesday.html">Week 5 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205/DifferenceSquares.html">Optional: Difference of Squares Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%206/Week6-Monday.html">Week 6 Monday</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks/issues/new?title=Issue%20on%20page%20%2FLabs/Lab0.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Labs/Lab0.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 0 - Math 173A</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-to-create-a-workspace-for-your-group">Instructions to create a workspace for your group</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-a-python-helper-file">Import a Python helper file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-about-the-imported-functions">Learn about the imported functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#letter-frequencies">Letter frequencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-index-of-coincidence">Mutual Index of Coincidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-decryption">Automated decryption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-the-shift-decrypt-function">Testing the <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-0-math-173a">
+<h1>Lab 0 - Math 173A<a class="headerlink" href="#lab-0-math-173a" title="Link to this heading">#</a></h1>
+<p>This lab is due Wednesday of Week 2, by 11:59pm.</p>
+<p>You are encouraged to work in groups of up to 3 total students, but each student should make their own submission on Canvas.  (It’s fine for everyone in the group to have the same upload.)</p>
+<p>Put the <strong>full names</strong> of everyone in your group (even if you’re working alone) here.  (This makes grading easier.)</p>
+<ul class="simple">
+<li><p><strong>Names</strong>:</p></li>
+</ul>
+<section id="instructions-to-create-a-workspace-for-your-group">
+<h2>Instructions to create a workspace for your group<a class="headerlink" href="#instructions-to-create-a-workspace-for-your-group" title="Link to this heading">#</a></h2>
+<p>One group member should create a workspace for the group using the following instructions.  By upgrading to the (free) Education plan as described here, the hardware Deepnote provides to you should be more reliable.</p>
+<ul class="simple">
+<li><p>Click on your workspace name at the top left, then click the “+” icon next to your name.</p></li>
+<li><p>Choose the “Free” plan if you are asked to choose a plan.</p></li>
+<li><p>Give your workspace a name, like “Lab 0 group”.  Select the option “Education”.</p></li>
+<li><p>Invite your groupmates, giving them “Editor” or “Admin” access.  Then click the “Create Workspace” button.</p></li>
+<li><p>Click on “Settings &amp; members” on the left side, then “Upgrade”, then “Upgrade to Education”.</p></li>
+<li><p>If you click on the … next to this <code class="docutils literal notranslate"><span class="pre">Lab</span> <span class="pre">0</span></code> project, you should be able to duplicate it into your the new workspace you just created.  Once you have this duplicate copy, you can edit it.</p></li>
+</ul>
+</section>
+<section id="import-a-python-helper-file">
+<h2>Import a Python helper file<a class="headerlink" href="#import-a-python-helper-file" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Go to the <code class="docutils literal notranslate"><span class="pre">Files</span></code> section on our Canvas course space, and download the file <code class="docutils literal notranslate"><span class="pre">Lab0_Helper.py</span></code> in the <code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">files</span></code> folder.</p></li>
+<li><p>Upload this <code class="docutils literal notranslate"><span class="pre">Lab0_Helper.py</span></code> file into the <code class="docutils literal notranslate"><span class="pre">Files</span></code> section on the right-hand side of this workspace.  (Hit the plus icon, or click and drag the file.)</p></li>
+<li><p>Import several functions defined in that uploaded file by evaluating the following code.  (Copy and paste it into a new cell, and then evaluate by holding down Shift and hitting Enter.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Lab0_Helper</span> <span class="kn">import</span> <span class="n">shift_string</span><span class="p">,</span> <span class="n">only_letters</span><span class="p">,</span> <span class="n">english_freq</span><span class="p">,</span> <span class="n">get_freq</span><span class="p">,</span> <span class="n">mut_ind_co</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Add your code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="learn-about-the-imported-functions">
+<h2>Learn about the imported functions<a class="headerlink" href="#learn-about-the-imported-functions" title="Link to this heading">#</a></h2>
+<p><strong>Warning</strong>.  There might be some slight differences between these functions and the functions we used during lecture on Monday.  But the differences should be minor.  For example, maybe one function returns letters in upper-case and the other function returns letters in lower-case.</p>
+<ul class="simple">
+<li><p>Check that <code class="docutils literal notranslate"><span class="pre">shift_string</span></code> is working by evaluating the following.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="s2">&quot;yeah&quot;</span>
+<span class="n">shift_string</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Check that <code class="docutils literal notranslate"><span class="pre">only_letters</span></code> is working by evaluating the following code.  (Notice that the number disappears, the same as the punctuation and spaces.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="s2">&quot;Hello, and welcome to Math 173A!&quot;</span>
+<span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Check that <code class="docutils literal notranslate"><span class="pre">get_freq</span></code> is working by evaluating the following code.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">get_freq</span><span class="p">(</span><span class="s2">&quot;Hello there&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result should be a Python dictionary whose keys are the lowercase letters, and whose values are the proportions which which those letters appear in the string.  For example, the letter “e” appears three times and there are ten total letters, so the value for <code class="docutils literal notranslate"><span class="pre">&quot;e&quot;</span></code> is the real number <code class="docutils literal notranslate"><span class="pre">0.3</span></code>.</p>
+<ul class="simple">
+<li><p>If you evaluate <code class="docutils literal notranslate"><span class="pre">english_freq</span></code>, you should see a similar dictionary, with estimated proportions for “average” English text.  (These were calculated by computing the proportions from the book <em>A Tale of Two Cities</em>.)</p></li>
+</ul>
+<ul class="simple">
+<li><p>The function <code class="docutils literal notranslate"><span class="pre">mut_ind_co</span></code> is meant to be used with frequencies for two different pieces of text, but you can also use it by repeating the frequency for a single piece of text.  This should produce a real number which is an estimate for the probability that two randomly chosen English letters are equal.  The following computes the Mutual Index of Coincidence between our “average” English text and itself.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mut_ind_co</span><span class="p">(</span><span class="n">english_freq</span><span class="p">,</span> <span class="n">english_freq</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="letter-frequencies">
+<h2>Letter frequencies<a class="headerlink" href="#letter-frequencies" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Paste in a block of English text, surrounded by triple quotation marks (this helps prevent errors due to apostrophes), and store the resulting string using the variable <code class="docutils literal notranslate"><span class="pre">s</span></code>:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Your text goes here.  It can be long and include linebreaks.&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">get_freq(s)</span></code>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>How do these values compare to the percentages shown in Hoffstein-Pipher-Silverman (HPS), Table 1.3 on page 6?  (Your answer will depend on how long your block of text was.  Notice that HPS reports percentages, and the <code class="docutils literal notranslate"><span class="pre">get_freq</span></code> function reports probabilities or proportions.)</p></li>
+</ul>
+<p>Briefly answer this question in a markdown cell (you can click the three lines on the right side of this cell and select “add markdown cell”).</p>
+<p><em>Double-click this markdown cell and add your answer here</em></p>
+</section>
+<section id="mutual-index-of-coincidence">
+<h2>Mutual Index of Coincidence<a class="headerlink" href="#mutual-index-of-coincidence" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For your same string <code class="docutils literal notranslate"><span class="pre">s</span></code> as above, compute the Mutual Index of Coincidence with <code class="docutils literal notranslate"><span class="pre">english_freq</span></code>.  For suitably long English text, the value should be around <code class="docutils literal notranslate"><span class="pre">0.065</span></code>.  (As long as the value is above <code class="docutils literal notranslate"><span class="pre">0.06</span></code> and below <code class="docutils literal notranslate"><span class="pre">0.075</span></code>, that is a good range.)</p></li>
+</ul>
+<ul class="simple">
+<li><p>Make a new string <code class="docutils literal notranslate"><span class="pre">t</span></code> of random text (not English, just hit random keys on the keyboard, but try not to repeat the same letters to an extreme degree).</p></li>
+</ul>
+<ul class="simple">
+<li><p>Again compute the Mutual Index of Coincidence with <code class="docutils literal notranslate"><span class="pre">english_freq</span></code>.  The new value should be closer to <code class="docutils literal notranslate"><span class="pre">0.04</span></code> or <code class="docutils literal notranslate"><span class="pre">0.05</span></code>.</p></li>
+</ul>
+</section>
+<section id="automated-decryption">
+<h2>Automated decryption<a class="headerlink" href="#automated-decryption" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> to automatically decrypt ciphertext that has been encrypted using a shift cipher.  Use the following pseudocode as your template.  (Even if you have an alternate approach, for this assignment, you should follow this pseudocode.  You may check with your professor if you have a different approach.)</p></li>
+</ul>
+<blockquote>
+<div><p>Function name: <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code></p>
+<p>Input: A string <code class="docutils literal notranslate"><span class="pre">Y</span></code>
+Output: A tuple containing decrypted plaintext <code class="docutils literal notranslate"><span class="pre">X</span></code> along with the shift amount used for decryption.</p>
+<p>Strategy: For each possible shift amount from <code class="docutils literal notranslate"><span class="pre">0</span></code> (inclusive) to <code class="docutils literal notranslate"><span class="pre">26</span></code> (exclusive), shift <code class="docutils literal notranslate"><span class="pre">Y</span></code> by this amount, and compute the Mutual Index of Coincidence between the resulting text and English.
+Return the shifted text for which the Mutual Index of Coincidence with English is highest, along with the corresponding shift amount.</p>
+</div></blockquote>
+<p>Here is a template to help you with the syntax and strategy.  In this template, rather than using the above strategy, we return the shift amount for which the frequency of the letter <code class="docutils literal notranslate"><span class="pre">&quot;E&quot;</span></code> is highest.  If you already are pretty comfortable with Python, try to see how far you can get without using this template.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">naive_decrypt</span><span class="p">(</span><span class="n">Y</span><span class="p">):</span>
+    <span class="n">holder</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">shift_string</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">holder</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">)</span>
+        
+    <span class="c1"># np.argmax finds the location of the maximum value.</span>
+    <span class="c1"># (If the maximum is obtained multiple times, only the first index is returned.)</span>
+    <span class="n">shift_amt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">holder</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">shift_string</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="testing-the-shift-decrypt-function">
+<h2>Testing the <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function<a class="headerlink" href="#testing-the-shift-decrypt-function" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Encrypt the string <code class="docutils literal notranslate"><span class="pre">&quot;INTROCRYPTOGRAPHY&quot;</span></code> using a shift cipher.  (Use the <code class="docutils literal notranslate"><span class="pre">shift_string</span></code> function… don’t do this by hand.)  Store the resulting ciphertext using the variable name <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Evaluate <code class="docutils literal notranslate"><span class="pre">Y</span></code> (there’s no need to use <code class="docutils literal notranslate"><span class="pre">print</span></code>, just execute a code cell with <code class="docutils literal notranslate"><span class="pre">Y</span></code> in it) to see what the encrypted text looks like.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Does your <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function find the true plaintext in this case?</p></li>
+</ul>
+<p><em>Double-click this markdown cell and add your answer here</em></p>
+<ul class="simple">
+<li><p>Notice that the returned shift amount is different from the shift amount you used for encryption (unless you chose a shift amount of <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">13</span></code>).  Briefly explain why that’s the case in a markdown cell.</p></li>
+</ul>
+<p>(Notice that a different shift amount being returned is not an indication of a mistake in our code.)</p>
+<p><em>Double-click this markdown cell and add your answer here</em></p>
+<ul class="simple">
+<li><p>Try evaluating <code class="docutils literal notranslate"><span class="pre">naive_decrypt</span></code> on the ciphertext you made.  (You’ll first need to execute the <code class="docutils literal notranslate"><span class="pre">naive_decrypt</span></code> code by pasting it into a code cell and then evaluating that cell.)</p></li>
+</ul>
+<ul class="simple">
+<li><p>How could we have known in advance that the naive strategy would not work in this case?  Briefly explain in a markdown cell.</p></li>
+</ul>
+<p><em>Double-click this markdown cell and add your answer here</em></p>
+<ul class="simple">
+<li><p>Find an example of text for which your <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function does not work.  Try to make the original English text at least a few words.</p></li>
+</ul>
+</section>
+<section id="submission">
+<h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>In Deepnote, Use the <code class="docutils literal notranslate"><span class="pre">Share</span></code> button at the top right, enable public sharing, and enable Comment privileges. Then submit the created link on Canvas.</p></li>
+</ul>
+<p>(Don’t just copy the browser URL.  Copy the link that is provided after you click the “Share” button.  It won’t be available until you enable public sharing.)</p>
+<ul class="simple">
+<li><p>Reminder: Everyone in the group needs to submit this link on Canvas.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Labs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">UC Irvine Math 173A Summer Session I 2026</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lab1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 1 - Math 173A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instructions-to-create-a-workspace-for-your-group">Instructions to create a workspace for your group</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-a-python-helper-file">Import a Python helper file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-about-the-imported-functions">Learn about the imported functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#letter-frequencies">Letter frequencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-index-of-coincidence">Mutual Index of Coincidence</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automated-decryption">Automated decryption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-the-shift-decrypt-function">Testing the <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christopher Davis and Luke Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
