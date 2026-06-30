@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -417,7 +417,7 @@
 <p>(You will also work together with another group below.  In particular, you will perform the Diffie-Hellman key exchange with another group.)</p>
 <section id="suggestion">
 <h2>Suggestion<a class="headerlink" href="#suggestion" title="Link to this heading">#</a></h2>
-<p>Follow the instructions from the Lab 0 worksheet to make an Education Workspace for this lab.</p>
+<p>Follow the instructions from the Lab 0 worksheet to make an Deepnote Education Workspace for this lab.</p>
 </section>
 <section id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
@@ -430,21 +430,106 @@
 <p>Deepnote will suggest moving this to a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file.  Do that by clicking the “move packages” link that Deepnote shows.  Now every time you start the Deepnote hardware for this Lab 2 project, this package will be automatically installed and available to you.</p>
 <p><strong>Comment 1</strong>.  One of the times I tried this, I couldn’t get the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file to be created.  If that happens to you, it’s not a big deal, you’ll just have to run the <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pycryptodome</span></code> command each time you start the hardware.</p>
 <p><strong>Comment 2</strong>.  We also need the <code class="docutils literal notranslate"><span class="pre">sympy</span></code> library, but I believe that is pre-installed in Deepnote.  If it does not seem to be installed for you, then repeat the above procedure for <code class="docutils literal notranslate"><span class="pre">sympy</span></code> as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pycryptodome
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pycryptodome in c:\program files\python39\lib\site-packages (3.23.0)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: You are using pip version 21.0.1; however, version 26.0.1 is available.
+You should consider upgrading via the &#39;c:\program files\python39\python.exe -m pip install --upgrade pip&#39; command.
+</pre></div>
+</div>
+</div>
+</div>
 <ul class="simple">
 <li><p>Import some functions we will use by executing the following code.  (This will raise an error if  <code class="docutils literal notranslate"><span class="pre">pycryptodome</span></code> hasn’t been successfully installed.)</p></li>
 </ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="n">getPrime</span><span class="p">,</span> <span class="n">getRandomNBitInteger</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">Crypto.Util.number</span> <span class="kn">import</span> <span class="n">getPrime</span><span class="p">,</span> <span class="n">getRandomNBitInteger</span>
 <span class="kn">from</span> <span class="nn">sympy.ntheory</span> <span class="kn">import</span> <span class="n">n_order</span>
 
-<span class="kn">from</span> <span class="nn">Lab2_Helper</span> <span class="kn">import</span> <span class="p">(</span>
-                            <span class="n">only_letters</span><span class="p">,</span>
-                            <span class="n">weave</span><span class="p">,</span> 
-                            <span class="n">shift_string</span><span class="p">,</span>
-                            <span class="n">add_spaces</span><span class="p">,</span>
-                            <span class="n">to_base_b</span><span class="p">,</span>
-                            <span class="n">from_base_b</span>
-                        <span class="p">)</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+
+<span class="k">def</span> <span class="nf">string_for_code_block</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">linewidth</span><span class="p">))</span>
+
+    
+<span class="k">def</span> <span class="nf">add_spaces</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="n">one_line</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">))</span>
+    <span class="n">many_lines</span> <span class="o">=</span> <span class="n">string_for_code_block</span><span class="p">(</span><span class="n">one_line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">many_lines</span>
+
+
+<span class="k">def</span> <span class="nf">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the string obtained from X by removing everything but the letters.</span>
+<span class="sd">    If case=&quot;upper&quot; or case=&quot;lower&quot;, then the letters are all</span>
+<span class="sd">    converted to the same case.&#39;&#39;&#39;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    
+
+<span class="k">def</span> <span class="nf">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts a specific character by shift_amt.</span>
+<span class="sd">    Example:</span>
+<span class="sd">    shift_char(&quot;Y&quot;, 3) returns &quot;B&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
+    <span class="c1"># It&#39;s not clear what shifting should mean in other cases</span>
+    <span class="c1"># so if the character is not upper or lower-case, we leave it unchanged</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ch</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="n">base</span><span class="p">)</span><span class="o">+</span><span class="n">shift_amt</span><span class="p">)</span><span class="o">%</span><span class="k">26</span>+ord(base))
+
+
+<span class="k">def</span> <span class="nf">shift_string</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts all characters in X by the same amount.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">X</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">weave</span><span class="p">(</span><span class="n">string_list</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">string_list</span><span class="p">)])</span>
+    <span class="c1"># The rest is just to deal with the case of unequal string lengths</span>
+    <span class="c1"># We assume the only possibility is that the early strings are one character longer</span>
+    <span class="n">last_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">string_list</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">last_length</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">to_base_b</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the digits of `num` when written in base `base`.</span>
+<span class="sd">    Adapted from code on Stack Overflow.&#39;&#39;&#39;</span>
+    <span class="n">digits</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">num</span><span class="p">,</span> <span class="n">rem</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+        <span class="n">digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rem</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">digits</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">from_base_b</span><span class="p">(</span><span class="n">digit_list</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Converts from a list of digits in base `base` to an integer.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="o">*</span><span class="n">base</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">digit_list</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 </pre></div>
+</div>
+</div>
 </div>
 <ul class="simple">
 <li><p>Paste in your code defining the <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function from Lab 1.  (I believe I have included all the necessary imports like <code class="docutils literal notranslate"><span class="pre">only_letters</span></code>, but feel free to add more if your <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function depends on them.)</p></li>
@@ -545,7 +630,7 @@ M
 <section id="submission">
 <h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Using the <code class="docutils literal notranslate"><span class="pre">Share</span></code> button at the top right, enable public sharing, and enable Comment privileges. Then submit the created link on Canvas.</p></li>
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">Share</span></code> button at the top right of Deepnote, enable public sharing, and enable Comment privileges. Then submit the created link on Canvas.</p></li>
 </ul>
 <p>(Don’t just copy the browser URL.  Copy the link that is provided after you click the “Share” button.  It won’t be available until you enable public sharing.)</p>
 <ul class="simple">
