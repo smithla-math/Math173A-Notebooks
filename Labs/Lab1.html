@@ -1,0 +1,1033 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lab 1 - Math 173A &#8212; UC Irvine Math 173A</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Labs/Lab1';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Lab 2 - Math 173A" href="Lab2.html" />
+    <link rel="prev" title="Lab 0 - Math 173A" href="Lab0.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/letterfreq.png" class="logo__image only-light" alt="UC Irvine Math 173A - Home"/>
+    <img src="../_static/letterfreq.png" class="logo__image only-dark pst-js-only" alt="UC Irvine Math 173A - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    UC Irvine Math 173A Summer Session I 2026
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lab0.html">Lab 0 - Math 173A</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lab 1 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab2.html">Lab 2 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab3.html">Lab 3 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab4.html">Lab 4 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lab5.html">Lab 5 - Math 173A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Fast%20Powering.html">Fast Powering vs Naive Powering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Week1-Monday%20-%20Letter%20Frequency.html">Week 1 Monday - Letter Frequency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%201/Week1-Friday%20-%20Vigenere.html">Week 1 Friday - Vigenère Cryptanalysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Week2-Wednesday%20-%20Discrete%20Log.html">Week 2 Wednesday - Discrete Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Week2-Friday.html">Week 2 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%202/Z-KeyExchangeSpace.html">Key Exchange Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%203/Week%203%20Monday.html">Week 3 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%203/Week%203%20Wednesday.html">Week 3 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%204/Week4-Friday.html">Week 4 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205/Week5-Monday.html">Week 5 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205%20Wednesday/Week5-Wednesday.html">Week 5 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%205/DifferenceSquares.html">Optional: Difference of Squares Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Lectures/Week%206/Week6-Monday.html">Week 6 Monday</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks/issues/new?title=Issue%20on%20page%20%2FLabs/Lab1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Labs/Lab1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lab 1 - Math 173A</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suggestion">Suggestion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-encryption">Vigenère encryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-the-vigenere-function">Writing the <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posting-vigenere-ciphertext-on-in-canvas-discussion">Posting Vigenère ciphertext on in Canvas Discussion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-decryption">Vigenère decryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-key-length-using-the-kasiski-method">Finding the key-length using the Kasiski method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-key-length-using-the-index-of-coincidence">Finding the key-length using the Index of Coincidence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-shift-amounts">Finding the shift amounts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">Putting it all together</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decrypting-vigenere-ciphertext-from-canvas-discussion">Decrypting Vigenère ciphertext from Canvas Discussion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lab-1-math-173a">
+<h1>Lab 1 - Math 173A<a class="headerlink" href="#lab-1-math-173a" title="Link to this heading">#</a></h1>
+<p><strong>Note</strong>.  This is not the first lab, be sure you do Lab 0 first.  (Lab 0 is also due one week earlier.)</p>
+<p>You are encouraged to work in groups of up to 3 total students, but each student should make their own submission on Canvas.  (It’s fine for everyone in the group to have the same upload.)</p>
+<p>Put the <strong>full names</strong> of everyone in your group (even if you’re working alone) here.  (This makes grading easier.)</p>
+<ul class="simple">
+<li><p><strong>Names</strong>:</p></li>
+</ul>
+<section id="suggestion">
+<h2>Suggestion<a class="headerlink" href="#suggestion" title="Link to this heading">#</a></h2>
+<p>Follow the instructions from the Lab 0 worksheet to make an Education Workspace for this lab.</p>
+</section>
+<section id="preliminaries">
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Link to this heading">#</a></h2>
+<p>Our goal in this lab is to implement encryption and (more difficult) automatic decryption of Vigenère ciphertext, as described in Section 5.2 of Hoffstein, Pipher, and Silverman.</p>
+<p>In this <em>Preliminaries</em> section, we introduce some concepts and tools that will be useful below.</p>
+<ul class="simple">
+<li><p>Import some libraries and functions we will need by executing the following code.  Some of these functions are new.  Some you might have to review from lecture or Lab 0.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">english_freq</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mf">0.0803</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mf">0.014</span><span class="p">,</span>
+    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mf">0.0232</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mf">0.0467</span><span class="p">,</span>
+    <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mf">0.1247</span><span class="p">,</span>
+    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="mf">0.0226</span><span class="p">,</span>
+    <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="mf">0.0209</span><span class="p">,</span>
+    <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="mf">0.065</span><span class="p">,</span>
+    <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="mf">0.0683</span><span class="p">,</span>
+    <span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mf">0.0012</span><span class="p">,</span>
+    <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mf">0.008</span><span class="p">,</span>
+    <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mf">0.0367</span><span class="p">,</span>
+    <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mf">0.0255</span><span class="p">,</span>
+    <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mf">0.0706</span><span class="p">,</span>
+    <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="mf">0.0776</span><span class="p">,</span>
+    <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mf">0.0166</span><span class="p">,</span>
+    <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mf">0.0011</span><span class="p">,</span>
+    <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mf">0.0621</span><span class="p">,</span>
+    <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mf">0.0626</span><span class="p">,</span>
+    <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mf">0.0902</span><span class="p">,</span>
+    <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="mf">0.0279</span><span class="p">,</span>
+    <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="mf">0.0087</span><span class="p">,</span>
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mf">0.0236</span><span class="p">,</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.0012</span><span class="p">,</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mf">0.0203</span><span class="p">,</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">0.0004</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the string obtained from X by removing everything but the letters.</span>
+<span class="sd">    If case=&quot;upper&quot; or case=&quot;lower&quot;, then the letters are all</span>
+<span class="sd">    converted to the same case.&#39;&#39;&#39;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">string_for_code_block</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">linewidth</span><span class="p">))</span>
+
+    
+<span class="k">def</span> <span class="nf">add_spaces</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="n">one_line</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">))</span>
+    <span class="n">many_lines</span> <span class="o">=</span> <span class="n">string_for_code_block</span><span class="p">(</span><span class="n">one_line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">many_lines</span>
+    
+
+<span class="k">def</span> <span class="nf">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts a specific character by shift_amt.</span>
+<span class="sd">    Example:</span>
+<span class="sd">    shift_char(&quot;Y&quot;, 3) returns &quot;B&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
+    <span class="c1"># It&#39;s not clear what shifting should mean in other cases</span>
+    <span class="c1"># so if the character is not upper or lower-case, we leave it unchanged</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ch</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="n">base</span><span class="p">)</span><span class="o">+</span><span class="n">shift_amt</span><span class="p">)</span><span class="o">%</span><span class="k">26</span>+ord(base))
+
+
+<span class="k">def</span> <span class="nf">shift_string</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts all characters in X by the same amount.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">X</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">mut_ind_co</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;For letter frequency dictionaries d1 and d2, return the Mutual Index of Coincidence.</span>
+<span class="sd">    See Equation (5.9) on page 222 in Hoffstein, Pipher, Silverman.&#39;&#39;&#39;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d1</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">d1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">d2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+
+<span class="k">def</span> <span class="nf">ind_co</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ctr</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">ctr</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">weave</span><span class="p">(</span><span class="n">string_list</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">string_list</span><span class="p">)])</span>
+    <span class="c1"># The rest is just to deal with the case of unequal string lengths</span>
+    <span class="c1"># We assume the only possibility is that the early strings are one character longer</span>
+    <span class="n">last_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">string_list</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">last_length</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a Python Counter object of all n-grams in X.&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">X</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">shifts</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">grams</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chrs</span><span class="p">)</span> <span class="k">for</span> <span class="n">chrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">shifts</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">grams</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_freq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the proportion that each letter occurs in &quot;X&quot;&#39;&#39;&#39;</span>
+    
+    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;case should be &#39;upper&#39; or &#39;lower&#39;.&quot;</span><span class="p">)</span>
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">:</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctr</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">/</span><span class="n">n</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+
+<span class="k">def</span> <span class="nf">kasiski_diffs</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">):</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">tri_reps</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">ctr</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tri</span> <span class="ow">in</span> <span class="n">tri_reps</span><span class="p">:</span>
+       <span class="n">starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;(?=</span><span class="si">{</span><span class="n">tri</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="p">)]</span>
+       <span class="n">diffs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+ 
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">diffs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>When we encrypt using the Vigenère cipher with a key length of 5 (for example), we shift all the characters at integer positions 0 modulo 5 by the same amount, all characters at integer positions 1 modulo 5 by the same amount, and so on.  Assume <code class="docutils literal notranslate"><span class="pre">X</span></code> is the string we want to encrypt using the Vigenère cipher with a key length of <code class="docutils literal notranslate"><span class="pre">5</span></code>.  Notice you can get all the characters in <code class="docutils literal notranslate"><span class="pre">X</span></code> at integer positions 2 modulo 5 (for example) using <code class="docutils literal notranslate"><span class="pre">X[2::5]</span></code>.  (You can think of this as shorthand for <code class="docutils literal notranslate"><span class="pre">X[2:len(X):5]</span></code>, which means, start at position <code class="docutils literal notranslate"><span class="pre">2</span></code>, go until reaching <code class="docutils literal notranslate"><span class="pre">len(X)</span></code>, go up by <code class="docutils literal notranslate"><span class="pre">5</span></code>.)  Test this out by setting <code class="docutils literal notranslate"><span class="pre">X</span> <span class="pre">=</span> <span class="pre">string.ascii_uppercase</span></code> and then printing <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">X[2::5]</span></code>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>We need a way of “re-assembling” these strings.  We can do that using the imported <code class="docutils literal notranslate"><span class="pre">weave</span></code> function.  Evaluate the following code to get a sense for how it works.  (Here <code class="docutils literal notranslate"><span class="pre">X</span></code> should be the same as above.  If you know list comprehension, try to recreate this list using list comprehension.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">weave</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">5</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>As described on page 219 of Hoffstein, Pipher, and Silverman, the <em>Kasiski method</em> first finds the gaps between repeated trigrams in Vigenère ciphertext.  (The idea is that these repeated trigrams will usually correspond to the same English plaintext, and so the gaps will usually be divisible by the key length.)  The <code class="docutils literal notranslate"><span class="pre">kasiski_diffs</span></code> function will find these gaps for us.  Try it out by evaluating the following code, and notice that the numbers match those in Table 5.3 in Hoffstein, Pipher, Silverman, and that many of them are divisible by 7.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;zpgdl rjlaj kpylx zpyyg lrjgd lrzhz qyjzq repvm swrzy rigzh</span>
+<span class="s1">zvreg kwivs saolt nliuw oldie aqewf iiykh bjowr hdogc qhkwa</span>
+<span class="s1">jyagg emisr zqoqh oavlk bjofr ylvps rtgiu avmsw lzgms evwpc</span>
+<span class="s1">dmjsv jqbrn klpcf iowhv kxjbj pmfkr qthtk ozrgq ihbmq sbivd</span>
+<span class="s1">ardym qmpbu nivxm tzwqv gefjh ucbor vwpcd xuwft qmoow jipds</span>
+<span class="s1">fluqm oeavl jgqea lrkti wvext vkrrg xani&#39;&#39;&#39;</span>
+
+<span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>In lecture on Monday of Week 1, we used (an estimate for) the Index of Coincidence to distinguish random characters from shift ciphertext.  One strength of the Vigenère cipher is that it looks very much like random text from this perspective.  Compute <code class="docutils literal notranslate"><span class="pre">ind_co(Y)</span></code> for <code class="docutils literal notranslate"><span class="pre">Y</span></code> as above, and compare it with <code class="docutils literal notranslate"><span class="pre">1/26</span></code>, which is the value expected for randomly chosen English characters.  (<strong>Comment</strong>.  We’ve changed <code class="docutils literal notranslate"><span class="pre">ind_co</span></code> since Monday.  It used to take a dictionary of letter frequencies as input, like <code class="docutils literal notranslate"><span class="pre">mut_ind_co</span></code>.  Now it takes a string as input.)</p></li>
+</ul>
+<ul class="simple">
+<li><p>On the other hand, the above was encrypted using a Vigenère cipher with a key length of <code class="docutils literal notranslate"><span class="pre">7</span></code>.  Compute the following and compare the values with the expected Index of Coincidence value for true English of approximately <code class="docutils literal notranslate"><span class="pre">0.068</span></code>.  (All of the values will be close to, but slightly less than, this <code class="docutils literal notranslate"><span class="pre">0.068</span></code> value.  I’m not sure if there is a theoretical reason for why they are less than <code class="docutils literal notranslate"><span class="pre">0.068</span></code>.  The important thing is they’re all significantly closer to the true English value than to the random characters value.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span> <span class="c1"># we remove spaces from `Y`</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ind_co</span><span class="p">(</span><span class="n">Z</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">7</span><span class="p">]))</span>
+</pre></div>
+</div>
+</section>
+<section id="vigenere-encryption">
+<h2>Vigenère encryption<a class="headerlink" href="#vigenere-encryption" title="Link to this heading">#</a></h2>
+<section id="writing-the-vigenere-function">
+<h3>Writing the <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function<a class="headerlink" href="#writing-the-vigenere-function" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Write a function to perform Vigenère encryption using the following template.  (If you want to make the code more elegant, replace <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(key_length):</span></code> in our template with <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i,</span> <span class="pre">k</span> <span class="pre">in</span> <span class="pre">enumerate(key):</span></code>.)</p></li>
+</ul>
+<blockquote>
+<div><p>Input: a string <code class="docutils literal notranslate"><span class="pre">X</span></code> and a list of shift amounts <code class="docutils literal notranslate"><span class="pre">key</span></code>
+Output: a string <code class="docutils literal notranslate"><span class="pre">Y</span></code></p>
+<p>Example: If <code class="docutils literal notranslate"><span class="pre">X</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;The</span> <span class="pre">rain</span> <span class="pre">in</span> <span class="pre">Spain</span> <span class="pre">stays</span> <span class="pre">mainly</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">plain&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">key</span></code> is <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">11,</span> <span class="pre">0,</span> <span class="pre">12,</span> <span class="pre">8,</span> <span class="pre">13,</span> <span class="pre">6,</span> <span class="pre">14]</span></code>, then the output should be the ciphertext written on page 217 of our textbook, beginning <code class="docutils literal notranslate"><span class="pre">&quot;YSEDIVTWSDPM...&quot;</span></code>.</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">vigenere</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">key_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">string_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">key_length</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="c1"># Get the characters in `X` at integer positions ??? modulo ???</span>
+        <span class="n">shifted_s</span> <span class="o">=</span> <span class="c1"># Shift the characters in s.  Use the imported `shift_string` function.</span>
+        <span class="n">string_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shifted_s</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="c1"># Use the imported `weave` function</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Test your function by evaluating the following and checking that the result matches what is on page 217 of the textbook (aside from ours being in upper-case letters).</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="s2">&quot;The rain in Spain stays mainly in the plain&quot;</span>
+<span class="n">key</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">]</span>
+<span class="n">vigenere</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="posting-vigenere-ciphertext-on-in-canvas-discussion">
+<h3>Posting Vigenère ciphertext on in Canvas Discussion<a class="headerlink" href="#posting-vigenere-ciphertext-on-in-canvas-discussion" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Encrypt a piece of English text using the above <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function with a random key of length 7, 8, 9, 10, or 11.</p></li>
+<li><p>You can generate a random key using the following, where <code class="docutils literal notranslate"><span class="pre">key_length</span></code> is your chosen length.  (The resulting <code class="docutils literal notranslate"><span class="pre">key</span></code> is a NumPy array rather than a list, but it should still work.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">key_length</span><span class="p">)</span>
+<span class="n">key</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Your chosen text should be quite long, maybe 300 characters.  Just copy and paste from some source, and use triple quotation marks.  (Using triple quotation marks means that Python won’t complain about line breaks or apostrophes or double quotation marks in your pasted text.)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39; Your text here &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Encrypt your chosen plaintext using the above key and the <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function.  Store the resulting ciphertext using the variable name <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Make the ciphertext less overwhelming to look at by evaluating the following.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">add_spaces</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Go to the “Lab 1 Ciphertexts” thread on Canvas Discussion.  Post the displayed ciphertext as a new response.  Type triple backticks (on my keyboard, backtick is the key above tab) before pasting the ciphertext, or alternatively, change from “Paragraph” to “Code” in the dropdown menu.  This will let Ed Discussion know that all characters should be displayed with the same width.</p></li>
+</ul>
+</section>
+</section>
+<section id="vigenere-decryption">
+<h2>Vigenère decryption<a class="headerlink" href="#vigenere-decryption" title="Link to this heading">#</a></h2>
+<p>There are two main steps to decrypting Vigenère ciphertext: Find the key length and find the individual shift amounts.  Finding the individual shift amounts is essentially the same as what we did in Lab 0, so the main work is finding the key length.</p>
+<p>We will implement two separate methods for finding the key length, both of which are described in Section 5.2 of Hoffstein, Pipher, and Silverman.</p>
+<section id="finding-the-key-length-using-the-kasiski-method">
+<h3>Finding the key-length using the Kasiski method<a class="headerlink" href="#finding-the-key-length-using-the-kasiski-method" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">prop_div</span></code> using the following template.</p></li>
+</ul>
+<blockquote>
+<div><p>Input: a list of integers <code class="docutils literal notranslate"><span class="pre">X</span></code> and a modulus <code class="docutils literal notranslate"><span class="pre">m</span></code>
+Output: the proportion of integers in <code class="docutils literal notranslate"><span class="pre">X</span></code> which are divisible by <code class="docutils literal notranslate"><span class="pre">m</span></code></p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">prop_div([3,5,8,9,10],</span> <span class="pre">3)</span></code> should be equal to <code class="docutils literal notranslate"><span class="pre">0.4</span></code>, because 2 out of 5 of these integers are divisible by 3.</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def prop_div(X, m):
+    n = len(X)
+    t = 0 # Eventually t will be the number of integers divisible by m in X
+    for x in X:
+        if x%??? == ???:
+            t = t+1
+    return ??? # Return the proportion, not t.
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">key_length_kasiski</span></code> to predict the key length using the following template.  (Recall that we introduced the <code class="docutils literal notranslate"><span class="pre">kasiski_diffs</span></code> function above.)  The idea is to find for which key length value, from <code class="docutils literal notranslate"><span class="pre">key_start</span></code> (inclusive) to <code class="docutils literal notranslate"><span class="pre">key_end</span></code> (exclusive), is the highest proportion of gaps between repeated trigrams divisible by that key length.  The parameters <code class="docutils literal notranslate"><span class="pre">top_value</span></code> and <code class="docutils literal notranslate"><span class="pre">top_key</span></code> represent the current highest proportion and the current best key length, respectively.</p></li>
+</ul>
+<p>Feel free to rewrite this if you would like to use a more elegant/Pythonic approach to find the best key length, as long as it is still using the <em>Kasiski method</em>.  (If I were doing this in Math 10, I think I would make a pandas Series <code class="docutils literal notranslate"><span class="pre">prop_ser</span></code> with values equal to the proportions and keys equal to the key lengths, and then I would find the best key length by using <code class="docutils literal notranslate"><span class="pre">prop_ser.idxmax()</span></code>.)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def key_length_kasiski(Y, key_start=7, key_end=12):
+    diffs = kasiski_diffs(Y)
+    
+    top_value = 0
+    top_key = 0
+    
+    for k in range(key_start, key_end):
+        prop = prop_div(diffs, k)
+        if ??? &gt; ???:
+            top_value = prop
+            top_key = k
+
+    return ??? # Return the key length which yields the highest value
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Test your function by evaluating the following.  The output should be <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;zpgdl rjlaj kpylx zpyyg lrjgd lrzhz qyjzq repvm swrzy rigzh</span>
+<span class="s1">zvreg kwivs saolt nliuw oldie aqewf iiykh bjowr hdogc qhkwa</span>
+<span class="s1">jyagg emisr zqoqh oavlk bjofr ylvps rtgiu avmsw lzgms evwpc</span>
+<span class="s1">dmjsv jqbrn klpcf iowhv kxjbj pmfkr qthtk ozrgq ihbmq sbivd</span>
+<span class="s1">ardym qmpbu nivxm tzwqv gefjh ucbor vwpcd xuwft qmoow jipds</span>
+<span class="s1">fluqm oeavl jgqea lrkti wvext vkrrg xani&#39;&#39;&#39;</span>
+
+<span class="n">key_length_kasiski</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="finding-the-key-length-using-the-index-of-coincidence">
+<h3>Finding the key-length using the Index of Coincidence<a class="headerlink" href="#finding-the-key-length-using-the-index-of-coincidence" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">coincidence_mean</span></code> using the following template.  (Note.  Base Python does not have a built-in mean or average function, but it does have a built in <code class="docutils literal notranslate"><span class="pre">sum</span></code> function.)</p></li>
+</ul>
+<blockquote>
+<div><p>Inputs: a string <code class="docutils literal notranslate"><span class="pre">Y</span></code> and an integer <code class="docutils literal notranslate"><span class="pre">m</span></code>.
+Output: a real number</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def coincidence_mean(Y, m):
+    coinc_list = []
+    for i in range(m):
+        s = # Get the characters in `Y` at integer positions ??? modulo ???
+        c = # Compute the Index of Coincidence for `s` using the `ind_co` function
+        coinc_list.append(c)
+
+    return ??? # Return the mean value of `coinc_list`
+</pre></div>
+</div>
+<p>Alternatively, if you create an array instead of a list, you may use <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> directly.</p>
+<blockquote>
+<div><p>Inputs: a string <code class="docutils literal notranslate"><span class="pre">Y</span></code> and an integer <code class="docutils literal notranslate"><span class="pre">m</span></code>.
+Output: a real number</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import numpy as np
+
+def coincidence_mean(Y, m):
+    coinc_arr = np.zeros(m)
+    for i in range(m):
+        s = # Get the characters in `Y` at integer positions ??? modulo ???
+        c = # Compute the Index of Coincidence for `s` using the `ind_co` function
+        coinc_arr[i] = c
+
+    return ??? # Return the mean value of `coinc_arr`
+</pre></div>
+</div>
+<p>You may write the function either way.</p>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">key_length_coincidence</span></code> to predict the key length using the following template.</p></li>
+</ul>
+<p>Again, feel free to rewrite this if you would like to use a more elegant approach, as long as it is still using the <code class="docutils literal notranslate"><span class="pre">coincidence_mean</span></code> function from above.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def key_length_coincidence(Y, key_start=7, key_end=12):
+    
+    top_value = 0
+    top_key = 0
+    
+    for k in range(key_start, key_end):
+        mean = coincidence_mean(???, ???)
+        if ??? &gt; ???:
+            top_value = ???
+            top_key = ???
+
+    return ??? # Return the key length which yields the highest value
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Test your function by evaluating the following.  The output should again be <code class="docutils literal notranslate"><span class="pre">7</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;zpgdl rjlaj kpylx zpyyg lrjgd lrzhz qyjzq repvm swrzy rigzh</span>
+<span class="s1">zvreg kwivs saolt nliuw oldie aqewf iiykh bjowr hdogc qhkwa</span>
+<span class="s1">jyagg emisr zqoqh oavlk bjofr ylvps rtgiu avmsw lzgms evwpc</span>
+<span class="s1">dmjsv jqbrn klpcf iowhv kxjbj pmfkr qthtk ozrgq ihbmq sbivd</span>
+<span class="s1">ardym qmpbu nivxm tzwqv gefjh ucbor vwpcd xuwft qmoow jipds</span>
+<span class="s1">fluqm oeavl jgqea lrkti wvext vkrrg xani&#39;&#39;&#39;</span>
+
+<span class="n">key_length_coincidence</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="finding-the-shift-amounts">
+<h3>Finding the shift amounts<a class="headerlink" href="#finding-the-shift-amounts" title="Link to this heading">#</a></h3>
+<p>This portion should be easier, because you essentially already did this in Lab 0.</p>
+<ul class="simple">
+<li><p>Paste in and execute the code for your <code class="docutils literal notranslate"><span class="pre">shift_decrypt</span></code> function from Lab 0.</p></li>
+</ul>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">find_shifts</span></code> using the following template.</p></li>
+</ul>
+<blockquote>
+<div><p>Inputs: a Vigenère ciphertext string <code class="docutils literal notranslate"><span class="pre">Y</span></code> and a key-length <code class="docutils literal notranslate"><span class="pre">k</span></code>
+Output: a list of shift amounts <code class="docutils literal notranslate"><span class="pre">shifts</span></code></p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_shifts</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">shifts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="c1"># Get the characters in `Y` at integer positions ??? modulo ???</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">shift_decrypt</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1"># We only care about the shift amount `m`</span>
+        <span class="n">shifts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">shifts</span>
+</pre></div>
+</div>
+</section>
+<section id="putting-it-all-together">
+<h3>Putting it all together<a class="headerlink" href="#putting-it-all-together" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Write a function <code class="docutils literal notranslate"><span class="pre">vigenere_decrypt</span></code> using the following template.  The <code class="docutils literal notranslate"><span class="pre">method</span></code> keyword argument allows the user to specify whether they wish to use the Kasiski method or the Index of Coincidence method to find the key length.  If no method is specified, the Kasiski method is used by default.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>def vigenere_decrypt(Y, key_start=7, key_end=12, method=&quot;kasiski&quot;):
+    Y = only_letters(Y, case=&quot;upper&quot;) # Remove spaces
+
+    if method == &quot;kasiski&quot;:
+        key_length_fn = key_length_kasiski
+    elif method == &quot;coincidence&quot;:
+        key_length_fn = key_length_coincidence
+    else:
+        raise ValueError(&#39;&#39;&#39;key_length should be either &quot;kasiski&quot; or &quot;coincidence&quot;&#39;&#39;&#39;)
+        
+    k = key_length_fn(Y, key_start=key_start, key_end=key_end) # `k` is the predicted key length
+    shifts = ??? # The predicted shift amounts
+    X = ??? # The predicted plaintext.  Use your `vigenere` function from high above
+    
+    return X.lower()
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Try to decrypt the above ciphertext from Section 5.2 of Hoffstein, Pipher, and Silverman.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;zpgdl rjlaj kpylx zpyyg lrjgd lrzhz qyjzq repvm swrzy rigzh</span>
+<span class="s1">zvreg kwivs saolt nliuw oldie aqewf iiykh bjowr hdogc qhkwa</span>
+<span class="s1">jyagg emisr zqoqh oavlk bjofr ylvps rtgiu avmsw lzgms evwpc</span>
+<span class="s1">dmjsv jqbrn klpcf iowhv kxjbj pmfkr qthtk ozrgq ihbmq sbivd</span>
+<span class="s1">ardym qmpbu nivxm tzwqv gefjh ucbor vwpcd xuwft qmoow jipds</span>
+<span class="s1">fluqm oeavl jgqea lrkti wvext vkrrg xani&#39;&#39;&#39;</span>
+
+<span class="n">vigenere_decrypt</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="decrypting-vigenere-ciphertext-from-canvas-discussion">
+<h3>Decrypting Vigenère ciphertext from Canvas Discussion<a class="headerlink" href="#decrypting-vigenere-ciphertext-from-canvas-discussion" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Select one of your classmate’s Vigenère ciphertexts that were posted on Ed Discussion and attempt to decrypt it using your <code class="docutils literal notranslate"><span class="pre">vigenere_decrypt</span></code> function.  Assign the ciphertext to the variable name <code class="docutils literal notranslate"><span class="pre">Y</span></code> (use triple quotation marks to allow line breaks).  Try using both key length methods.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vigenere_decrypt</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;kasiski&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vigenere_decrypt</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;coincidence&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Do they both wok?</p>
+</section>
+</section>
+<section id="submission">
+<h2>Submission<a class="headerlink" href="#submission" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">Share</span></code> button at the top right, enable public sharing, and enable Comment privileges. Then submit the created link on Canvas.</p></li>
+</ul>
+<p>(Don’t just copy the browser URL.  Copy the link that is provided after you click the “Share” button.  It won’t be available until you enable public sharing.)</p>
+<ul class="simple">
+<li><p>Reminder: Everyone in the group needs to submit this link on Canvas.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Labs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lab0.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lab 0 - Math 173A</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lab2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lab 2 - Math 173A</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suggestion">Suggestion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminaries">Preliminaries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-encryption">Vigenère encryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-the-vigenere-function">Writing the <code class="docutils literal notranslate"><span class="pre">vigenere</span></code> function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#posting-vigenere-ciphertext-on-in-canvas-discussion">Posting Vigenère ciphertext on in Canvas Discussion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-decryption">Vigenère decryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-key-length-using-the-kasiski-method">Finding the key-length using the Kasiski method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-key-length-using-the-index-of-coincidence">Finding the key-length using the Index of Coincidence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-shift-amounts">Finding the shift amounts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-all-together">Putting it all together</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decrypting-vigenere-ciphertext-from-canvas-discussion">Decrypting Vigenère ciphertext from Canvas Discussion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submission">Submission</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christopher Davis and Luke Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

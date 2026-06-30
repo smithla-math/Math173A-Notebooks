@@ -1,0 +1,1589 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Week 1 Friday - Vigenère Cryptanalysis &#8212; UC Irvine Math 173A</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Lectures/Week 1/Week1-Friday - Vigenere';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Week 2 Wednesday - Discrete Log" href="../Week%202/Week2-Wednesday%20-%20Discrete%20Log.html" />
+    <link rel="prev" title="Week 1 Monday - Letter Frequency" href="Week1-Monday%20-%20Letter%20Frequency.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/letterfreq.png" class="logo__image only-light" alt="UC Irvine Math 173A - Home"/>
+    <img src="../../_static/letterfreq.png" class="logo__image only-dark pst-js-only" alt="UC Irvine Math 173A - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    UC Irvine Math 173A Summer Session I 2026
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Labs</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab0.html">Lab 0 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab1.html">Lab 1 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab2.html">Lab 2 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab3.html">Lab 3 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab4.html">Lab 4 - Math 173A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Labs/Lab5.html">Lab 5 - Math 173A</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture Notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Fast%20Powering.html">Fast Powering vs Naive Powering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Week1-Monday%20-%20Letter%20Frequency.html">Week 1 Monday - Letter Frequency</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Week 1 Friday - Vigenère Cryptanalysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%202/Week2-Wednesday%20-%20Discrete%20Log.html">Week 2 Wednesday - Discrete Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%202/Week2-Friday.html">Week 2 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%202/Z-KeyExchangeSpace.html">Key Exchange Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%203/Week%203%20Monday.html">Week 3 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%203/Week%203%20Wednesday.html">Week 3 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%204/Week4-Friday.html">Week 4 Friday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%205/Week5-Monday.html">Week 5 Monday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%205%20Wednesday/Week5-Wednesday.html">Week 5 Wednesday</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%205/DifferenceSquares.html">Optional: Difference of Squares Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week%206/Week6-Monday.html">Week 6 Monday</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/smithla-math/Math173A-Notebooks/issues/new?title=Issue%20on%20page%20%2FLectures/Week 1/Week1-Friday - Vigenere.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Lectures/Week 1/Week1-Friday - Vigenere.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Week 1 Friday - Vigenère Cryptanalysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-ciphertext-letter-frequency">Vigenère ciphertext letter frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trigram-frequency">Trigram frequency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kasiski-differences">Kasiski Differences</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="week-1-friday-vigenere-cryptanalysis">
+<h1>Week 1 Friday - Vigenère Cryptanalysis<a class="headerlink" href="#week-1-friday-vigenere-cryptanalysis" title="Link to this heading">#</a></h1>
+<p>The main goal today is to prepare for Lab 1, which is about automatically decrypting Vigenère ciphertext.</p>
+<ul class="simple">
+<li><p>Please run the following libraries and functions we will need.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">textwrap</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+
+<span class="n">english_freq</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mf">0.0803</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mf">0.014</span><span class="p">,</span>
+    <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mf">0.0232</span><span class="p">,</span>
+    <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mf">0.0467</span><span class="p">,</span>
+    <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mf">0.1247</span><span class="p">,</span>
+    <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="mf">0.0226</span><span class="p">,</span>
+    <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="mf">0.0209</span><span class="p">,</span>
+    <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="mf">0.065</span><span class="p">,</span>
+    <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="mf">0.0683</span><span class="p">,</span>
+    <span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mf">0.0012</span><span class="p">,</span>
+    <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="mf">0.008</span><span class="p">,</span>
+    <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mf">0.0367</span><span class="p">,</span>
+    <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mf">0.0255</span><span class="p">,</span>
+    <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mf">0.0706</span><span class="p">,</span>
+    <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="mf">0.0776</span><span class="p">,</span>
+    <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mf">0.0166</span><span class="p">,</span>
+    <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mf">0.0011</span><span class="p">,</span>
+    <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mf">0.0621</span><span class="p">,</span>
+    <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mf">0.0626</span><span class="p">,</span>
+    <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mf">0.0902</span><span class="p">,</span>
+    <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="mf">0.0279</span><span class="p">,</span>
+    <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="mf">0.0087</span><span class="p">,</span>
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mf">0.0236</span><span class="p">,</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.0012</span><span class="p">,</span>
+    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mf">0.0203</span><span class="p">,</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mf">0.0004</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the string obtained from X by removing everything but the letters.</span>
+<span class="sd">    If case=&quot;upper&quot; or case=&quot;lower&quot;, then the letters are all</span>
+<span class="sd">    converted to the same case.&#39;&#39;&#39;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">X</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    
+    <span class="k">if</span> <span class="n">case</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">string_for_code_block</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">linewidth</span><span class="p">))</span>
+
+    
+<span class="k">def</span> <span class="nf">add_spaces</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+    <span class="n">one_line</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">))</span>
+    <span class="n">many_lines</span> <span class="o">=</span> <span class="n">string_for_code_block</span><span class="p">(</span><span class="n">one_line</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">many_lines</span>
+    
+
+<span class="k">def</span> <span class="nf">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts a specific character by shift_amt.</span>
+<span class="sd">    Example:</span>
+<span class="sd">    shift_char(&quot;Y&quot;, 3) returns &quot;B&quot;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;a&#39;</span>
+    <span class="k">elif</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">:</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span>
+    <span class="c1"># It&#39;s not clear what shifting should mean in other cases</span>
+    <span class="c1"># so if the character is not upper or lower-case, we leave it unchanged</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ch</span>
+    <span class="k">return</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">ch</span><span class="p">)</span><span class="o">-</span><span class="nb">ord</span><span class="p">(</span><span class="n">base</span><span class="p">)</span><span class="o">+</span><span class="n">shift_amt</span><span class="p">)</span><span class="o">%</span><span class="k">26</span>+ord(base))
+
+
+<span class="k">def</span> <span class="nf">shift_string</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Shifts all characters in X by the same amount.&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">shift_char</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">shift_amt</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">X</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">mut_ind_co</span><span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;For letter frequency dictionaries d1 and d2, return the Mutual Index of Coincidence.</span>
+<span class="sd">    See Equation (5.9) on page 222 in Hoffstein, Pipher, Silverman.&#39;&#39;&#39;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d1</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">d1</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">d2</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+
+<span class="k">def</span> <span class="nf">ind_co</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ctr</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">f</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">ctr</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<span class="k">def</span> <span class="nf">weave</span><span class="p">(</span><span class="n">string_list</span><span class="p">):</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">string_list</span><span class="p">)])</span>
+    <span class="c1"># The rest is just to deal with the case of unequal string lengths</span>
+    <span class="c1"># We assume the only possibility is that the early strings are one character longer</span>
+    <span class="n">last_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">string_list</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">last_length</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">output</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">extra</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a Python Counter object of all n-grams in X.&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">X</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">shifts</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">grams</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chrs</span><span class="p">)</span> <span class="k">for</span> <span class="n">chrs</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">shifts</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">Counter</span><span class="p">(</span><span class="n">grams</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_freq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the proportion that each letter occurs in &quot;X&quot;&#39;&#39;&#39;</span>
+    
+    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;case should be &#39;upper&#39; or &#39;lower&#39;.&quot;</span><span class="p">)</span>
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">letters</span><span class="p">:</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="n">ctr</span><span class="p">[</span><span class="n">char</span><span class="p">]</span><span class="o">/</span><span class="n">n</span>
+    <span class="k">return</span> <span class="n">output</span>
+
+
+<span class="k">def</span> <span class="nf">kasiski_diffs</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">):</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">ctr</span> <span class="o">=</span> <span class="n">count_substrings</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">tri_reps</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">ctr</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tri</span> <span class="ow">in</span> <span class="n">tri_reps</span><span class="p">:</span>
+       <span class="n">starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">m</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;(?=</span><span class="si">{</span><span class="n">tri</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">Y</span><span class="p">)]</span>
+       <span class="n">diffs</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+ 
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">diffs</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">freq_chart</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Plot the letter frequency chart.&#39;&#39;&#39;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;lower&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">case</span> <span class="o">==</span> <span class="s2">&quot;upper&quot;</span><span class="p">:</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_uppercase</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;case should be &#39;upper&#39; or &#39;lower&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">freq_dict</span> <span class="o">=</span> <span class="n">get_freq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="n">case</span><span class="p">)</span>
+    <span class="n">ser_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">freq_dict</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;freq&quot;</span><span class="p">)</span>
+    <span class="n">df_count</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ser_count</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">df_count</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="s2">&quot;letter&quot;</span><span class="p">},</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df_count</span><span class="p">)</span><span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">&quot;letter&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">letters</span><span class="p">)),</span>
+        <span class="n">y</span><span class="o">=</span><span class="s2">&quot;freq&quot;</span><span class="p">,</span>
+        <span class="n">tooltip</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;letter&quot;</span><span class="p">,</span> <span class="s2">&quot;freq&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">chart</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="vigenere-ciphertext-letter-frequency">
+<h2>Vigenère ciphertext letter frequency<a class="headerlink" href="#vigenere-ciphertext-letter-frequency" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Here are three Vigenère ciphertexts.  The string <code class="docutils literal notranslate"><span class="pre">Y0</span></code> was encrypted using a key length of <code class="docutils literal notranslate"><span class="pre">1</span></code>, the string <code class="docutils literal notranslate"><span class="pre">Y1</span></code> was encrypted using a key length of <code class="docutils literal notranslate"><span class="pre">5</span></code>, and the string <code class="docutils literal notranslate"><span class="pre">Y2</span></code> was encrypted using a key length of <code class="docutils literal notranslate"><span class="pre">201</span></code>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y0</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;IWTSX UUXTW TAABP CZTNT MRWPC VTPAV DGXIW BHDAK THIWT UDAAD</span>
+<span class="s1">LXCVS XATBB PPAXR TPCSQ DQLPC IIDHW PGTPH TRGTI ZTNUD GJHTX</span>
+<span class="s1">CPHNB BTIGX RRXEW TGQJI IWTXG DCANB TPCHD URDBB JCXRP IXDCX</span>
+<span class="s1">HXCHT RJGTT KTGNE XTRTD UXCUD GBPIX DCIWP IIWTN TMRWP CVTXH</span>
+<span class="s1">DQHTG KTSQN IWTXG PSKTG HPGNT KTWDL XHXIE DHHXQ ATUDG PAXRT</span>
+<span class="s1">PCSQD QIDHW PGTPZ TNLXI WDJIB PZXCV XIPKP XAPQA TIDTK TPIUX</span>
+<span class="s1">GHIVA PCRTX IPEET PGHIW PIPAX RTPCS QDQUP RTPCX BEDHH XQATI</span>
+<span class="s1">PHZXI LPHPQ GXAAX PCIXC HXVWI DUSXU UXTPC SWTAA BPCIW PIIWT</span>
+<span class="s1">SXUUX RJAIN DUIWT SXHRG TITAD VPGXI WBEGD QATBU DGUEE GDKXS</span>
+<span class="s1">THPED HHXQA THDAJ IXDC&#39;&#39;&#39;</span>
+
+<span class="n">Y1</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SCNWB EARXA DGUFT MFNRX WXQTG FZJEZ NMRMA LNXEO DNCAX EJUEH</span>
+<span class="s2">VDWZW HGNFF ZVUBV DVWWU NWFTG SOXLA ZMNTL DXAXM JZHYH QPBXB</span>
+<span class="s2">MVBRF LZCKB BXRIA DMKNM SCNBK NIURF DVWLH EXXFF TIRVT SDXGB</span>
+<span class="s2">RDWLX BPAXX UZARI HZLXH EDWYH QHJMB NICAT SOQXR DSLAT MBNBL</span>
+<span class="s2">NWBXK UZMUR SCNBK ZYEXK RVARX UZQHP HNRMI NNBBU KZOHK ZGRVX</span>
+<span class="s2">ZIMUH AOXLA ZMNTD DTFBM GJDMF ZFRGZ HOJOT HGJUE DOXXO DVCYB</span>
+<span class="s2">QNCZE ZILXB SVYIX ZMBMA ZOJEB BZJGW AJKYT BZJGB LKXLL HWUXM</span>
+<span class="s2">ZNTBM VVBTU QDUEB ZICBG RDPAM NAMBY EDNTG CCNEE LVWMA ZOCAX</span>
+<span class="s2">CDOYB BPUMR NACAX CDBVK DONEH FVABM GHYKH AGNFY NMOII QJEBW</span>
+<span class="s2">DNJIH RNRUE DNXEN SDXG&quot;&quot;&quot;</span>
+
+<span class="n">Y2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;DRWFU VMGIO NFCHD MNCWD OJPLK IBFWE PHDMJ QNADL QAFUP LPPHZ</span>
+<span class="s2">AYRJW WVKPD JGEUW YBVKR IUBZF HJWJT SLXUD NDCCB DMKCZ DPKKB</span>
+<span class="s2">REPBV VJXLK XYYQV QYTEV JKUSK IQBNP DXFJB HETJB YBJHO IYCEJ</span>
+<span class="s2">TKQKB PMMZI RFNLG QYQIR KOKCA ICQQZ VIVYI WAUNC QRMUW RTLZE</span>
+<span class="s2">ULCWT HUKZC AQYZM DCYCP RRYGP SGETH GTYOI QWNUT BQNAE LRJGA</span>
+<span class="s2">LRTFR UHYYK RAKTW YSXQA XINYL SYYVX ULUOU TUBMJ MMWQS PMOXO</span>
+<span class="s2">KWXDO JWHIC VVLFF ODZLR CJDBS VYDDS ENYXR PGCSF BTCTX WQBSK</span>
+<span class="s2">BTMLL TNKVW VEMHV RVNWR VNMEQ AWTYC WPZCE LKLYU QMHDU WXGOV</span>
+<span class="s2">POPPA EGBAW SMCBV YLRFP CSVSW RXTFY SKQHJ UNIHR GHRXB EZBJH</span>
+<span class="s2">ADEFS VLWLR HJXRN FCIO&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Looks like a shift cipher</span>
+<span class="c1"># because Vigenere cipher with key length 1 is the same as a shift cipher</span>
+<span class="n">freq_chart</span><span class="p">(</span><span class="n">Y0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+  #altair-viz-077182036a8946b4a4eac1861bc956c2.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-077182036a8946b4a4eac1861bc956c2.vega-embed details,
+  #altair-viz-077182036a8946b4a4eac1861bc956c2.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-077182036a8946b4a4eac1861bc956c2"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-077182036a8946b4a4eac1861bc956c2") {
+      outputDiv = document.getElementById("altair-viz-077182036a8946b4a4eac1861bc956c2");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.8.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.8.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-468e93a6c3ff2510ce312d461a5db6cf"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-468e93a6c3ff2510ce312d461a5db6cf": [{"letter": "A", "freq": 0.053304904051172705}, {"letter": "B", "freq": 0.031982942430703626}, {"letter": "C", "freq": 0.0511727078891258}, {"letter": "D", "freq": 0.07036247334754797}, {"letter": "E", "freq": 0.021321961620469083}, {"letter": "F", "freq": 0.0}, {"letter": "G", "freq": 0.0511727078891258}, {"letter": "H", "freq": 0.05970149253731343}, {"letter": "I", "freq": 0.08102345415778252}, {"letter": "J", "freq": 0.014925373134328358}, {"letter": "K", "freq": 0.017057569296375266}, {"letter": "L", "freq": 0.010660980810234541}, {"letter": "M", "freq": 0.0042643923240938165}, {"letter": "N", "freq": 0.021321961620469083}, {"letter": "O", "freq": 0.0}, {"letter": "P", "freq": 0.09168443496801706}, {"letter": "Q", "freq": 0.031982942430703626}, {"letter": "R", "freq": 0.03411513859275053}, {"letter": "S", "freq": 0.0255863539445629}, {"letter": "T", "freq": 0.11727078891257996}, {"letter": "U", "freq": 0.03837953091684435}, {"letter": "V", "freq": 0.017057569296375266}, {"letter": "W", "freq": 0.046908315565031986}, {"letter": "X", "freq": 0.09808102345415778}, {"letter": "Y", "freq": 0.0}, {"letter": "Z", "freq": 0.010660980810234541}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">26</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.038461538461538464
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can compare <code class="docutils literal notranslate"><span class="pre">Y1</span></code> and <code class="docutils literal notranslate"><span class="pre">Y2</span></code> more directly with <code class="docutils literal notranslate"><span class="pre">alt.hconcat</span></code>, but notice that the y-axes in each diagram do not line up. To be fair, this would have been a problem even without concatenation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">freq_chart</span><span class="p">(</span><span class="n">Y1</span><span class="p">),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+  #altair-viz-00a418bb050942f58bda4bb203df125c.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-00a418bb050942f58bda4bb203df125c.vega-embed details,
+  #altair-viz-00a418bb050942f58bda4bb203df125c.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-00a418bb050942f58bda4bb203df125c"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-00a418bb050942f58bda4bb203df125c") {
+      outputDiv = document.getElementById("altair-viz-00a418bb050942f58bda4bb203df125c");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.8.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.8.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"data": {"name": "data-35155a5d0eca28d2322581d2d924a33c"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-6d0177b0d4d2158d627c60a713c3a3ff"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}], "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-35155a5d0eca28d2322581d2d924a33c": [{"letter": "A", "freq": 0.0511727078891258}, {"letter": "B", "freq": 0.07462686567164178}, {"letter": "C", "freq": 0.031982942430703626}, {"letter": "D", "freq": 0.053304904051172705}, {"letter": "E", "freq": 0.04051172707889126}, {"letter": "F", "freq": 0.031982942430703626}, {"letter": "G", "freq": 0.03411513859275053}, {"letter": "H", "freq": 0.042643923240938165}, {"letter": "I", "freq": 0.02771855010660981}, {"letter": "J", "freq": 0.02771855010660981}, {"letter": "K", "freq": 0.0255863539445629}, {"letter": "L", "freq": 0.031982942430703626}, {"letter": "M", "freq": 0.05543710021321962}, {"letter": "N", "freq": 0.06823027718550106}, {"letter": "O", "freq": 0.029850746268656716}, {"letter": "P", "freq": 0.010660980810234541}, {"letter": "Q", "freq": 0.017057569296375266}, {"letter": "R", "freq": 0.042643923240938165}, {"letter": "S", "freq": 0.019189765458422176}, {"letter": "T", "freq": 0.031982942430703626}, {"letter": "U", "freq": 0.03624733475479744}, {"letter": "V", "freq": 0.03411513859275053}, {"letter": "W", "freq": 0.031982942430703626}, {"letter": "X", "freq": 0.07036247334754797}, {"letter": "Y", "freq": 0.021321961620469083}, {"letter": "Z", "freq": 0.057569296375266525}], "data-6d0177b0d4d2158d627c60a713c3a3ff": [{"letter": "A", "freq": 0.029850746268656716}, {"letter": "B", "freq": 0.04477611940298507}, {"letter": "C", "freq": 0.046908315565031986}, {"letter": "D", "freq": 0.04051172707889126}, {"letter": "E", "freq": 0.03411513859275053}, {"letter": "F", "freq": 0.031982942430703626}, {"letter": "G", "freq": 0.023454157782515993}, {"letter": "H", "freq": 0.03624733475479744}, {"letter": "I", "freq": 0.031982942430703626}, {"letter": "J", "freq": 0.04051172707889126}, {"letter": "K", "freq": 0.04477611940298507}, {"letter": "L", "freq": 0.04477611940298507}, {"letter": "M", "freq": 0.03624733475479744}, {"letter": "N", "freq": 0.03411513859275053}, {"letter": "O", "freq": 0.02771855010660981}, {"letter": "P", "freq": 0.04051172707889126}, {"letter": "Q", "freq": 0.042643923240938165}, {"letter": "R", "freq": 0.0511727078891258}, {"letter": "S", "freq": 0.031982942430703626}, {"letter": "T", "freq": 0.03837953091684435}, {"letter": "U", "freq": 0.04051172707889126}, {"letter": "V", "freq": 0.046908315565031986}, {"letter": "W", "freq": 0.0511727078891258}, {"letter": "X", "freq": 0.031982942430703626}, {"letter": "Y", "freq": 0.053304904051172705}, {"letter": "Z", "freq": 0.023454157782515993}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p>Notice the difference when we use the <code class="docutils literal notranslate"><span class="pre">resolve_scale</span></code> method. Now the comparison is direct!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">freq_chart</span><span class="p">(</span><span class="n">Y1</span><span class="p">),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span><span class="o">.</span><span class="n">resolve_scale</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;shared&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+  #altair-viz-2322274a45d649c6ac052ac5aacfcca4.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-2322274a45d649c6ac052ac5aacfcca4.vega-embed details,
+  #altair-viz-2322274a45d649c6ac052ac5aacfcca4.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-2322274a45d649c6ac052ac5aacfcca4"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-2322274a45d649c6ac052ac5aacfcca4") {
+      outputDiv = document.getElementById("altair-viz-2322274a45d649c6ac052ac5aacfcca4");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.8.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.8.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"data": {"name": "data-35155a5d0eca28d2322581d2d924a33c"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-6d0177b0d4d2158d627c60a713c3a3ff"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}], "resolve": {"scale": {"y": "shared"}}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-35155a5d0eca28d2322581d2d924a33c": [{"letter": "A", "freq": 0.0511727078891258}, {"letter": "B", "freq": 0.07462686567164178}, {"letter": "C", "freq": 0.031982942430703626}, {"letter": "D", "freq": 0.053304904051172705}, {"letter": "E", "freq": 0.04051172707889126}, {"letter": "F", "freq": 0.031982942430703626}, {"letter": "G", "freq": 0.03411513859275053}, {"letter": "H", "freq": 0.042643923240938165}, {"letter": "I", "freq": 0.02771855010660981}, {"letter": "J", "freq": 0.02771855010660981}, {"letter": "K", "freq": 0.0255863539445629}, {"letter": "L", "freq": 0.031982942430703626}, {"letter": "M", "freq": 0.05543710021321962}, {"letter": "N", "freq": 0.06823027718550106}, {"letter": "O", "freq": 0.029850746268656716}, {"letter": "P", "freq": 0.010660980810234541}, {"letter": "Q", "freq": 0.017057569296375266}, {"letter": "R", "freq": 0.042643923240938165}, {"letter": "S", "freq": 0.019189765458422176}, {"letter": "T", "freq": 0.031982942430703626}, {"letter": "U", "freq": 0.03624733475479744}, {"letter": "V", "freq": 0.03411513859275053}, {"letter": "W", "freq": 0.031982942430703626}, {"letter": "X", "freq": 0.07036247334754797}, {"letter": "Y", "freq": 0.021321961620469083}, {"letter": "Z", "freq": 0.057569296375266525}], "data-6d0177b0d4d2158d627c60a713c3a3ff": [{"letter": "A", "freq": 0.029850746268656716}, {"letter": "B", "freq": 0.04477611940298507}, {"letter": "C", "freq": 0.046908315565031986}, {"letter": "D", "freq": 0.04051172707889126}, {"letter": "E", "freq": 0.03411513859275053}, {"letter": "F", "freq": 0.031982942430703626}, {"letter": "G", "freq": 0.023454157782515993}, {"letter": "H", "freq": 0.03624733475479744}, {"letter": "I", "freq": 0.031982942430703626}, {"letter": "J", "freq": 0.04051172707889126}, {"letter": "K", "freq": 0.04477611940298507}, {"letter": "L", "freq": 0.04477611940298507}, {"letter": "M", "freq": 0.03624733475479744}, {"letter": "N", "freq": 0.03411513859275053}, {"letter": "O", "freq": 0.02771855010660981}, {"letter": "P", "freq": 0.04051172707889126}, {"letter": "Q", "freq": 0.042643923240938165}, {"letter": "R", "freq": 0.0511727078891258}, {"letter": "S", "freq": 0.031982942430703626}, {"letter": "T", "freq": 0.03837953091684435}, {"letter": "U", "freq": 0.04051172707889126}, {"letter": "V", "freq": 0.046908315565031986}, {"letter": "W", "freq": 0.0511727078891258}, {"letter": "X", "freq": 0.031982942430703626}, {"letter": "Y", "freq": 0.053304904051172705}, {"letter": "Z", "freq": 0.023454157782515993}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">only_letters</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>469
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the key for <code class="docutils literal notranslate"><span class="pre">Y2</span></code> was length 201, and the  was shifted by a different letter, the letter frequency looks much closer to uniform than <code class="docutils literal notranslate"><span class="pre">Y1</span></code>.</p>
+</section>
+<section id="trigram-frequency">
+<h2>Trigram frequency<a class="headerlink" href="#trigram-frequency" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Approximately how many repeated trigrams do we expect from random text?</p></li>
+</ul>
+<p>Consider <code class="docutils literal notranslate"><span class="pre">&quot;SCN&quot;</span></code> from the beginning of <code class="docutils literal notranslate"><span class="pre">Y1</span></code>.  Let’s look at positions 101, 102, 103.  What’s the probability that letters 101, 102, 103 are S, C, N, in that order, due to random chance?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="mi">26</span><span class="o">**</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.689576695493855e-05
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">pow</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">26</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.689576695493856e-05
+</pre></div>
+</div>
+</div>
+</div>
+<p>Where did 1/26^3 come from?  Each letter occurs randomly with probability 1/26, ….  Because these 3 positions are independent, the probability of all three happening is <span class="math notranslate nohighlight">\((1/26) \cdot (1/26) \cdot (1/26)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>562
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">only_letters</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;SCNWBEARXADGUFTMFNRXWXQTGFZJEZNMRMALNXEODNCAXEJUEHVDWZWHGNFFZVUBVDVWWUNWFTGSOXLAZMNTLDXAXMJZHYHQPBXBMVBRFLZCKBBXRIADMKNMSCNBKNIURFDVWLHEXXFFTIRVTSDXGBRDWLXBPAXXUZARIHZLXHEDWYHQHJMBNICATSOQXRDSLATMBNBLNWBXKUZMURSCNBKZYEXKRVARXUZQHPHNRMINNBBUKZOHKZGRVXZIMUHAOXLAZMNTDDTFBMGJDMFZFRGZHOJOTHGJUEDOXXODVCYBQNCZEZILXBSVYIXZMBMAZOJEBBZJGWAJKYTBZJGBLKXLLHWUXMZNTBMVVBTUQDUEBZICBGRDPAMNAMBYEDNTGCCNEELVWMAZOCAXCDOYBBPUMRNACAXCDBVKDONEHFVABMGHYKHAGNFYNMOIIQJEBWDNJIHRNRUEDNXENSDXG&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">only_letters</span><span class="p">(</span><span class="n">Y1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>469
+</pre></div>
+</div>
+</div>
+</div>
+<p>How does the length factor into into the expected number of “SCN” repeats? Probability of a match is <span class="math notranslate nohighlight">\(1/26^3\)</span>, the total length is <span class="math notranslate nohighlight">\(469\)</span>, so the expected number of random repetitions should be <span class="math notranslate nohighlight">\(469/26^3\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">469</span><span class="o">/</span><span class="p">(</span><span class="mi">26</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02668411470186618
+</pre></div>
+</div>
+</div>
+</div>
+<p>How many pairs of slots are there where a repetition could happen (not this particular “SCN” repetition)?</p>
+<p>If there were only 4 slots where we could place a trigram, then we would have <span class="math notranslate nohighlight">\(\displaystyle {4 \choose 2} = 6 \)</span> ways to arrange a repeat.  Similarly, for <span class="math notranslate nohighlight">\(n\)</span> slots to place a trigram, we would have <span class="math notranslate nohighlight">\(\displaystyle {n \choose 2} = \dfrac{n\cdot(n-1)}{2}\)</span> ways to arrange a repeat.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">469</span><span class="o">*</span><span class="mi">468</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>109746.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rough estimate: we expect this many repetitions of trigrams due to random chance</span>
+<span class="p">(</span><span class="mi">469</span><span class="o">*</span><span class="mi">468</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">26</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.244082840236686
+</pre></div>
+</div>
+</div>
+</div>
+<section id="kasiski-differences">
+<h3>Kasiski Differences<a class="headerlink" href="#kasiski-differences" title="Link to this heading">#</a></h3>
+<p>The function below counts how far apart the positions are between each repeated trigram. For instance, the value 10 at index 0 implies that, if the first triagram with a repeat occurs at position <span class="math notranslate nohighlight">\(p\)</span>, then this trigram is repeated starting at position <span class="math notranslate nohighlight">\(p+10\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 10,  10,  12,  15,  15,  15,  16,  23,  23,  23,  23,  24,  26,
+        29,  33,  33,  33,  42,  46,  49,  56,  56,  57,  58,  58,  65,
+        65,  66,  66,  69,  69,  69,  74,  75,  75,  77,  77,  77,  77,
+        77,  77,  77,  77,  77,  78,  80,  81,  87,  87,  89,  90,  90,
+        90, 107, 107, 107, 107, 107, 107, 112, 112, 112, 112, 112, 112,
+       119, 120, 133, 133, 134, 136, 136, 144, 147, 149, 160, 168, 170,
+       171, 171, 171, 171, 171, 171, 171, 171, 174, 179, 180, 180, 180,
+       180, 180, 180, 184, 184, 184, 184, 184, 184, 184, 184, 184, 186,
+       187, 196, 196, 197, 197, 202, 206, 210, 211, 211, 211, 211, 211,
+       211, 217, 219, 219, 219, 219, 219, 219, 226, 226, 236, 248, 252,
+       261, 261, 261, 261, 261, 261, 261, 261, 261, 266, 271, 271, 276,
+       277, 277, 287, 287, 292, 292, 317, 317, 318, 320, 320, 332, 332,
+       346, 355, 370, 374, 374, 374, 374, 377, 377, 377, 377, 377, 380,
+       396, 396, 396, 397, 397, 397, 397, 397, 397, 412, 412, 412, 425])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many repetitions of trigrams in `Y0`</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>182
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Y0</span></code> contains 182 repeats of trigrams.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many repetitions of trigrams in `Y2`</span>
+<span class="c1"># This is very close to the amount we would expect due to random chance</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># None of these are divisible by the key length of 201</span>
+<span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([  4,  18, 206, 284, 306, 454])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>37
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Notice many of these are divisible by the key length of 5</span>
+<span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 10,  10,  15,  15,  15,  17,  65,  65,  75,  75,  79,  80,  90,
+        90,  90, 120, 124, 154, 160, 170, 180, 180, 180, 180, 180, 180,
+       198, 210, 216, 241, 254, 320, 320, 355, 370, 380, 425])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">15</span><span class="o">%</span><span class="k">5</span> #15 mod 5
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">17</span><span class="o">%</span><span class="k">5</span> #17 mod 5
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2
+</pre></div>
+</div>
+</div>
+</div>
+<p>The more differences that are divisible by our guessed key length, the more evidence we have that this could potentially be our key length.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many divisible by 5?</span>
+<span class="n">guessed_length</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span><span class="o">%</span><span class="k">guessed_length</span> == 0).sum() 
+<span class="c1">#Broadcast operations across the array! </span>
+<span class="c1">#Each term in the array is modded by 5. </span>
+<span class="c1">#Checking where the elements are congruent to 0 is equivalent to checking divisibility by the guessed key length</span>
+<span class="c1">#Sum up all of the Trues, since they count as 1.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">t</span><span class="p">)</span> <span class="c1"># if this is a function, use `return`, not `print`</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7837837837837838
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># how many divisible by 7?</span>
+<span class="n">guessed_length</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">kasiski_diffs</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># How many divisible by guessed_length?</span>
+
+<span class="c1">#Can also do a for-loop and if statement approach. It&#39;s slower, but it&#39;s fine at this scale.</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="k">guessed_length</span> == 0: # if x is div by guessed_length
+        <span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">t</span><span class="p">)</span> <span class="c1"># if this is a function, use `return`, not `print`</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.05405405405405406
+</pre></div>
+</div>
+</div>
+</div>
+<p>Comparing guessed lengths with less factors in common is helpful. For instance, looking for the highest proportion works better for 7-11 than it would for 6-12.  Why?  Every number divisible by 12 is automatically divisible by 6.  So this method would not quite work if the key length were 12 and we tested for divisibility by 6.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;SCNWB EARXA DGUFT MFNRX WXQTG FZJEZ NMRMA LNXEO DNCAX EJUEH\nVDWZW HGNFF ZVUBV DVWWU NWFTG SOXLA ZMNTL DXAXM JZHYH QPBXB\nMVBRF LZCKB BXRIA DMKNM SCNBK NIURF DVWLH EXXFF TIRVT SDXGB\nRDWLX BPAXX UZARI HZLXH EDWYH QHJMB NICAT SOQXR DSLAT MBNBL\nNWBXK UZMUR SCNBK ZYEXK RVARX UZQHP HNRMI NNBBU KZOHK ZGRVX\nZIMUH AOXLA ZMNTD DTFBM GJDMF ZFRGZ HOJOT HGJUE DOXXO DVCYB\nQNCZE ZILXB SVYIX ZMBMA ZOJEB BZJGW AJKYT BZJGB LKXLL HWUXM\nZNTBM VVBTU QDUEB ZICBG RDPAM NAMBY EDNTG CCNEE LVWMA ZOCAX\nCDOYB BPUMR NACAX CDBVK DONEH FVABM GHYKH AGNFY NMOII QJEBW\nDNJIH RNRUE DNXEN SDXG&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">only_letters</span><span class="p">(</span><span class="n">Y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">6</span><span class="p">]</span> <span class="c1">#every 6th letter</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;SAURGNNCEWZVFLLJPBKASIWFTRPAXHNOLBKSYAHIKGMLDGFJUOQIYMBAZXXMQIPBGLOOMXDVYFIDNXG&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Chars at position 1 mod 6</span>
+<span class="c1"># Y[1], Y[7], Y[13], Y[19], ..</span>
+<span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;CRFXFMXAHHVWTADZBRBDCULFSDARHQIQALUCERPNZRUADJROEDNLIABJJLMVDCAYCVCYRCOAKYQNRE&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Compare letter frequency charts for every 6th letter vs every 5th letter. The ones that match our guessed key length “look” more English, but we should get more evidence.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">6</span><span class="p">]),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">6</span><span class="p">]))</span><span class="o">.</span><span class="n">resolve_scale</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;shared&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+  #altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679.vega-embed details,
+  #altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679") {
+      outputDiv = document.getElementById("altair-viz-b3ed0c5b5dc44e0e8df3d0bb9c01b679");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.8.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.8.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"data": {"name": "data-b6883961972237d91a09f4b545be4e9a"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-f960a1c1455f653927bb84aa06ee81ee"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}], "resolve": {"scale": {"y": "shared"}}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-b6883961972237d91a09f4b545be4e9a": [{"letter": "A", "freq": 0.06329113924050633}, {"letter": "B", "freq": 0.05063291139240506}, {"letter": "C", "freq": 0.012658227848101266}, {"letter": "D", "freq": 0.0379746835443038}, {"letter": "E", "freq": 0.012658227848101266}, {"letter": "F", "freq": 0.05063291139240506}, {"letter": "G", "freq": 0.06329113924050633}, {"letter": "H", "freq": 0.02531645569620253}, {"letter": "I", "freq": 0.06329113924050633}, {"letter": "J", "freq": 0.02531645569620253}, {"letter": "K", "freq": 0.0379746835443038}, {"letter": "L", "freq": 0.06329113924050633}, {"letter": "M", "freq": 0.05063291139240506}, {"letter": "N", "freq": 0.05063291139240506}, {"letter": "O", "freq": 0.05063291139240506}, {"letter": "P", "freq": 0.0379746835443038}, {"letter": "Q", "freq": 0.02531645569620253}, {"letter": "R", "freq": 0.02531645569620253}, {"letter": "S", "freq": 0.0379746835443038}, {"letter": "T", "freq": 0.012658227848101266}, {"letter": "U", "freq": 0.02531645569620253}, {"letter": "V", "freq": 0.02531645569620253}, {"letter": "W", "freq": 0.02531645569620253}, {"letter": "X", "freq": 0.06329113924050633}, {"letter": "Y", "freq": 0.0379746835443038}, {"letter": "Z", "freq": 0.02531645569620253}], "data-f960a1c1455f653927bb84aa06ee81ee": [{"letter": "A", "freq": 0.10256410256410256}, {"letter": "B", "freq": 0.038461538461538464}, {"letter": "C", "freq": 0.08974358974358974}, {"letter": "D", "freq": 0.07692307692307693}, {"letter": "E", "freq": 0.038461538461538464}, {"letter": "F", "freq": 0.038461538461538464}, {"letter": "G", "freq": 0.0}, {"letter": "H", "freq": 0.038461538461538464}, {"letter": "I", "freq": 0.02564102564102564}, {"letter": "J", "freq": 0.038461538461538464}, {"letter": "K", "freq": 0.01282051282051282}, {"letter": "L", "freq": 0.05128205128205128}, {"letter": "M", "freq": 0.02564102564102564}, {"letter": "N", "freq": 0.038461538461538464}, {"letter": "O", "freq": 0.02564102564102564}, {"letter": "P", "freq": 0.01282051282051282}, {"letter": "Q", "freq": 0.038461538461538464}, {"letter": "R", "freq": 0.10256410256410256}, {"letter": "S", "freq": 0.01282051282051282}, {"letter": "T", "freq": 0.01282051282051282}, {"letter": "U", "freq": 0.038461538461538464}, {"letter": "V", "freq": 0.038461538461538464}, {"letter": "W", "freq": 0.01282051282051282}, {"letter": "X", "freq": 0.02564102564102564}, {"letter": "Y", "freq": 0.038461538461538464}, {"letter": "Z", "freq": 0.02564102564102564}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">alt</span><span class="o">.</span><span class="n">hconcat</span><span class="p">(</span><span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">5</span><span class="p">]),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">5</span><span class="p">]),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">5</span><span class="p">]),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">5</span><span class="p">]),</span> <span class="n">freq_chart</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">5</span><span class="p">]))</span><span class="o">.</span><span class="n">resolve_scale</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;shared&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+C:\ProgramData\anaconda3\Lib\site-packages\altair\utils\core.py:395: FutureWarning: the convert_dtype parameter is deprecated and will be removed in a future version.  Do ``ser.astype(object).apply()`` instead if you want ``convert_dtype=False``.
+  col = df[col_name].apply(to_list_if_array, convert_dtype=False)
+</pre></div>
+</div>
+<div class="output text_html">
+<style>
+  #altair-viz-82ad093700e048b5a127b5adec647245.vega-embed {
+    width: 100%;
+    display: flex;
+  }
+
+  #altair-viz-82ad093700e048b5a127b5adec647245.vega-embed details,
+  #altair-viz-82ad093700e048b5a127b5adec647245.vega-embed details summary {
+    position: relative;
+  }
+</style>
+<div id="altair-viz-82ad093700e048b5a127b5adec647245"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-82ad093700e048b5a127b5adec647245") {
+      outputDiv = document.getElementById("altair-viz-82ad093700e048b5a127b5adec647245");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm/vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm/vega-lite@5.8.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm/vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "5.8.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "hconcat": [{"data": {"name": "data-a24da9d372a6fb6c17c166b1ae2c1622"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-34003d123382d87a5e903860cfc1658b"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-b589e88ed3cb9288ff840d095896a92b"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-588083d44edc6a304ee831de092fc5c5"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}, {"data": {"name": "data-cbfe07df4ce73b9463bb52b074f0ec11"}, "mark": {"type": "bar"}, "encoding": {"tooltip": [{"field": "letter", "type": "nominal"}, {"field": "freq", "type": "quantitative"}], "x": {"field": "letter", "scale": {"domain": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]}, "type": "nominal"}, "y": {"field": "freq", "type": "quantitative"}}}], "resolve": {"scale": {"y": "shared"}}, "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json", "datasets": {"data-a24da9d372a6fb6c17c166b1ae2c1622": [{"letter": "A", "freq": 0.031914893617021274}, {"letter": "B", "freq": 0.05319148936170213}, {"letter": "C", "freq": 0.031914893617021274}, {"letter": "D", "freq": 0.13829787234042554}, {"letter": "E", "freq": 0.05319148936170213}, {"letter": "F", "freq": 0.02127659574468085}, {"letter": "G", "freq": 0.02127659574468085}, {"letter": "H", "freq": 0.06382978723404255}, {"letter": "I", "freq": 0.0}, {"letter": "J", "freq": 0.010638297872340425}, {"letter": "K", "freq": 0.010638297872340425}, {"letter": "L", "freq": 0.0425531914893617}, {"letter": "M", "freq": 0.031914893617021274}, {"letter": "N", "freq": 0.09574468085106383}, {"letter": "O", "freq": 0.0}, {"letter": "P", "freq": 0.0}, {"letter": "Q", "freq": 0.05319148936170213}, {"letter": "R", "freq": 0.0425531914893617}, {"letter": "S", "freq": 0.0851063829787234}, {"letter": "T", "freq": 0.010638297872340425}, {"letter": "U", "freq": 0.031914893617021274}, {"letter": "V", "freq": 0.02127659574468085}, {"letter": "W", "freq": 0.010638297872340425}, {"letter": "X", "freq": 0.0}, {"letter": "Y", "freq": 0.0}, {"letter": "Z", "freq": 0.13829787234042554}], "data-34003d123382d87a5e903860cfc1658b": [{"letter": "A", "freq": 0.031914893617021274}, {"letter": "B", "freq": 0.010638297872340425}, {"letter": "C", "freq": 0.0425531914893617}, {"letter": "D", "freq": 0.10638297872340426}, {"letter": "E", "freq": 0.0}, {"letter": "F", "freq": 0.02127659574468085}, {"letter": "G", "freq": 0.05319148936170213}, {"letter": "H", "freq": 0.02127659574468085}, {"letter": "I", "freq": 0.06382978723404255}, {"letter": "J", "freq": 0.0425531914893617}, {"letter": "K", "freq": 0.010638297872340425}, {"letter": "L", "freq": 0.0}, {"letter": "M", "freq": 0.06382978723404255}, {"letter": "N", "freq": 0.09574468085106383}, {"letter": "O", "freq": 0.0851063829787234}, {"letter": "P", "freq": 0.031914893617021274}, {"letter": "Q", "freq": 0.0}, {"letter": "R", "freq": 0.0}, {"letter": "S", "freq": 0.010638297872340425}, {"letter": "T", "freq": 0.010638297872340425}, {"letter": "U", "freq": 0.0}, {"letter": "V", "freq": 0.10638297872340426}, {"letter": "W", "freq": 0.031914893617021274}, {"letter": "X", "freq": 0.0425531914893617}, {"letter": "Y", "freq": 0.010638297872340425}, {"letter": "Z", "freq": 0.10638297872340426}], "data-b589e88ed3cb9288ff840d095896a92b": [{"letter": "A", "freq": 0.05319148936170213}, {"letter": "B", "freq": 0.07446808510638298}, {"letter": "C", "freq": 0.0851063829787234}, {"letter": "D", "freq": 0.010638297872340425}, {"letter": "E", "freq": 0.02127659574468085}, {"letter": "F", "freq": 0.02127659574468085}, {"letter": "G", "freq": 0.0}, {"letter": "H", "freq": 0.010638297872340425}, {"letter": "I", "freq": 0.0}, {"letter": "J", "freq": 0.0851063829787234}, {"letter": "K", "freq": 0.02127659574468085}, {"letter": "L", "freq": 0.031914893617021274}, {"letter": "M", "freq": 0.031914893617021274}, {"letter": "N", "freq": 0.1276595744680851}, {"letter": "O", "freq": 0.031914893617021274}, {"letter": "P", "freq": 0.010638297872340425}, {"letter": "Q", "freq": 0.031914893617021274}, {"letter": "R", "freq": 0.0851063829787234}, {"letter": "S", "freq": 0.0}, {"letter": "T", "freq": 0.010638297872340425}, {"letter": "U", "freq": 0.07446808510638298}, {"letter": "V", "freq": 0.0}, {"letter": "W", "freq": 0.06382978723404255}, {"letter": "X", "freq": 0.09574468085106383}, {"letter": "Y", "freq": 0.02127659574468085}, {"letter": "Z", "freq": 0.0}], "data-588083d44edc6a304ee831de092fc5c5": [{"letter": "A", "freq": 0.06382978723404255}, {"letter": "B", "freq": 0.11702127659574468}, {"letter": "C", "freq": 0.0}, {"letter": "D", "freq": 0.0}, {"letter": "E", "freq": 0.0851063829787234}, {"letter": "F", "freq": 0.0425531914893617}, {"letter": "G", "freq": 0.05319148936170213}, {"letter": "H", "freq": 0.02127659574468085}, {"letter": "I", "freq": 0.0425531914893617}, {"letter": "J", "freq": 0.0}, {"letter": "K", "freq": 0.02127659574468085}, {"letter": "L", "freq": 0.05319148936170213}, {"letter": "M", "freq": 0.07446808510638298}, {"letter": "N", "freq": 0.010638297872340425}, {"letter": "O", "freq": 0.010638297872340425}, {"letter": "P", "freq": 0.0}, {"letter": "Q", "freq": 0.0}, {"letter": "R", "freq": 0.05319148936170213}, {"letter": "S", "freq": 0.0}, {"letter": "T", "freq": 0.06382978723404255}, {"letter": "U", "freq": 0.0425531914893617}, {"letter": "V", "freq": 0.031914893617021274}, {"letter": "W", "freq": 0.02127659574468085}, {"letter": "X", "freq": 0.11702127659574468}, {"letter": "Y", "freq": 0.05319148936170213}, {"letter": "Z", "freq": 0.02127659574468085}], "data-cbfe07df4ce73b9463bb52b074f0ec11": [{"letter": "A", "freq": 0.07526881720430108}, {"letter": "B", "freq": 0.11827956989247312}, {"letter": "C", "freq": 0.0}, {"letter": "D", "freq": 0.010752688172043012}, {"letter": "E", "freq": 0.043010752688172046}, {"letter": "F", "freq": 0.053763440860215055}, {"letter": "G", "freq": 0.043010752688172046}, {"letter": "H", "freq": 0.0967741935483871}, {"letter": "I", "freq": 0.03225806451612903}, {"letter": "J", "freq": 0.0}, {"letter": "K", "freq": 0.06451612903225806}, {"letter": "L", "freq": 0.03225806451612903}, {"letter": "M", "freq": 0.07526881720430108}, {"letter": "N", "freq": 0.010752688172043012}, {"letter": "O", "freq": 0.021505376344086023}, {"letter": "P", "freq": 0.010752688172043012}, {"letter": "Q", "freq": 0.0}, {"letter": "R", "freq": 0.03225806451612903}, {"letter": "S", "freq": 0.0}, {"letter": "T", "freq": 0.06451612903225806}, {"letter": "U", "freq": 0.03225806451612903}, {"letter": "V", "freq": 0.010752688172043012}, {"letter": "W", "freq": 0.03225806451612903}, {"letter": "X", "freq": 0.0967741935483871}, {"letter": "Y", "freq": 0.021505376344086023}, {"letter": "Z", "freq": 0.021505376344086023}]}}, {"mode": "vega-lite"});
+</script></div></div>
+</div>
+<p>Recall: We can use the index of coincidence to check whether text is random or shifted English (I believe this would also work with a simple substitution, as long as all the pieces we check had been subject to the same simple subtitution key).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guessed_length</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">guessed_length</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ind_co</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">guessed_length</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.03343070431678027
+0.04428904428904429
+0.05627705627705628
+0.056943056943056944
+0.038295038295038296
+0.04695304695304695
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guessed_length</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">guessed_length</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ind_co</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">guessed_length</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.06680393502630977
+0.06131320064058568
+0.06154198123999085
+0.0581102722489133
+0.05586722767648434
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Can&#39;t use mutual index of coincidence in this part</span>
+<span class="c1"># Looks random for these numbers</span>
+<span class="n">guessed_length</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">guessed_length</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">mut_ind_co</span><span class="p">(</span><span class="n">get_freq</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">guessed_length</span><span class="p">]),</span> <span class="n">english_freq</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.04181702127659574
+0.03527340425531914
+0.03594468085106382
+0.0415936170212766
+0.04053763440860215
+</pre></div>
+</div>
+</div>
+</div>
+<p>Use Mutual Index of Coincidence to try to decide if something is English.  We use the Index of Coincidence to try to decide if something is shift encrypted or substitution encrypted English.  (mut_ind_co wants “E” to be a very common letter.  ind_co wants there to be some very common letter, it doesn’t care which it is)</p>
+<p>We have the evidence to try a key of length 5!</p>
+<p><strong>Exercise: Determine the key used to encrypt <code class="docutils literal notranslate"><span class="pre">Y1</span></code> and decrypt the message. This will be useful for Lab 1!</strong></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Lectures\Week 1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Week1-Monday%20-%20Letter%20Frequency.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Week 1 Monday - Letter Frequency</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Week%202/Week2-Wednesday%20-%20Discrete%20Log.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Week 2 Wednesday - Discrete Log</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vigenere-ciphertext-letter-frequency">Vigenère ciphertext letter frequency</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#trigram-frequency">Trigram frequency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kasiski-differences">Kasiski Differences</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Christopher Davis and Luke Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
