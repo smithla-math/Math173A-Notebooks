@@ -1,10 +1,7 @@
 import string
-import textwrap
-import re
 from collections import Counter
-from itertools import combinations
-import numpy as np
 
+# Computed from "A Tale of Two Cities".  Compare Table 1.3 in Hoffstein, Pipher, Silverman.
 english_freq = {
     'a': 0.0803,
     'b': 0.014,
@@ -34,7 +31,6 @@ english_freq = {
     'z': 0.0004
 }
 
-
 def only_letters(X, case=None):
     '''Returns the string obtained from X by removing everything but the letters.
     If case="upper" or case="lower", then the letters are all
@@ -51,16 +47,6 @@ def only_letters(X, case=None):
     elif case == "upper":
         return X.upper()
 
-
-def string_for_code_block(X, linewidth=60):
-    return '\n'.join(textwrap.wrap(X, width=linewidth))
-
-    
-def add_spaces(X, width=5, linewidth=60):
-    one_line = ' '.join(textwrap.wrap(X, width=width))
-    many_lines = string_for_code_block(one_line, linewidth=linewidth)
-    return many_lines
-    
 
 def shift_char(ch, shift_amt):
     '''Shifts a specific character by shift_amt.
@@ -83,31 +69,6 @@ def shift_string(X, shift_amt):
     return ''.join(shift_char(ch, shift_amt) for ch in X)
 
 
-def mut_ind_co(d1, d2):
-    '''For letter frequency dictionaries d1 and d2, return the Mutual Index of Coincidence.
-    See Equation (5.9) on page 222 in Hoffstein, Pipher, Silverman.'''
-    s = 0
-    for k in d1.keys():
-        s += d1.get(k, 0)*d2.get(k,0)
-    return s
-
-
-def ind_co(X):
-    X = only_letters(X, case="upper")
-    ctr = count_substrings(X, 1)
-    n = sum(ctr.values())
-    return (1/(n*(n-1)))*sum(f*(f-1) for f in ctr.values())
-
-
-def weave(string_list):
-    output = ''.join([''.join(tup) for tup in zip(*string_list)])
-    # The rest is just to deal with the case of unequal string lengths
-    # We assume the only possibility is that the early strings are one character longer
-    last_length = len(string_list[-1])
-    extra = [s[-1] for s in string_list if len(s) > last_length]
-    return output + ''.join(extra)
-
-
 def count_substrings(X,n):
     '''Returns a Python Counter object of all n-grams in X.'''
     if not X:
@@ -118,32 +79,23 @@ def count_substrings(X,n):
     return Counter(grams)
 
 
-def get_freq(X, case="lower"):
-    '''Returns the proportion that each letter occurs in "X"'''
-    
-    if case == "lower":
-        letters = string.ascii_lowercase
-    elif case == "upper":
-        letters = string.ascii_uppercase
-    else:
-        raise ValueError("case should be 'upper' or 'lower'.")
-    
-    X = only_letters(X, case=case)
+def get_freq(X):
+    '''Returns the proportion that each letter occurs in "X".
+    I might change this later, but for now, it converts everything to lowercase.
+    The reason is to match what appears in the english_freq dictionary.'''
+    X = only_letters(X, case="lower")
     n = len(X)
     ctr = count_substrings(X, 1)
     output = {}
-    for char in letters:
+    for char in string.ascii_lowercase:
         output[char] = ctr[char]/n
     return output
 
 
-def kasiski_diffs(Y, case="upper"):
-    Y = only_letters(Y, case=case)
-    ctr = count_substrings(Y, 3)
-    tri_reps = [k for k,v in ctr.items() if v > 1]
-    diffs = []
-    for tri in tri_reps:
-       starts = [m.start() for m in re.finditer(f'(?={tri})', Y)]
-       diffs.extend([abs(x-y) for x,y in combinations(starts, 2)])
- 
-    return np.array(sorted(diffs))
+def mut_ind_co(d1, d2):
+    '''For letter frequency dictionaries d1 and d2, return the Mutual Index of Coincidence.
+    See Equation (5.9) on page 222 in Hoffstein, Pipher, Silverman.'''
+    s = 0
+    for k in d1.keys():
+        s += d1.get(k, 0)*d2.get(k,0)
+    return s

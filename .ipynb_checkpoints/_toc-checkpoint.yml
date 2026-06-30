@@ -1,0 +1,29 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: "Labs"
+    chapters:  
+      - file: Labs/Lab0
+      - file: Labs/Lab1
+      - file: Labs/Lab2
+      - file: Labs/Lab3
+      - file: Labs/Lab4
+      - file: Labs/Lab5
+  - caption: "Lecture Notebooks"
+    chapters:
+      - file: Lectures/Week 1/Fast Powering      
+      - file: Lectures/Week 1/Week1-Monday - Letter Frequency
+      - file: Lectures/Week 1/Week1-Friday - Vigenere
+      - file: Lectures/Week 2/Week2-Wednesday - Discrete Log
+      - file: Lectures/Week 2/Week2-Friday
+      - file: Lectures/Week 2/Z-KeyExchangeSpace
+      - file: Lectures/Week 3/Week 3 Monday
+      - file: Lectures/Week 3/Week 3 Wednesday
+      - file: Lectures/Week 4/Week4-Friday
+      - file: Lectures/Week 5/Week5-Monday
+      - file: Lectures/Week 5 Wednesday/Week5-Wednesday
+      - file: Lectures/Week 5/DifferenceSquares
+      - file: Lectures/Week 6/Week6-Monday
