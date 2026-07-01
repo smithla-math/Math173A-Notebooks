@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -389,6 +389,12 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-real-number-logarithms">Properties of real-number logarithms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primitive-roots-and-discrete-log">Primitive roots and Discrete Log</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-log-when-our-base-is-not-a-primitive-root">Discrete log when our base is not a primitive root</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-log-timing">Discrete log timing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1-brute-force">Method 1: Brute Force.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-trial-and-error">Method 2: Trial and Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3-shank-s-collision-algorithm">Method 3: Shank’s Collision Algorithm</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -485,7 +491,7 @@ logn(n, x)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CPU times: total: 0 ns
-Wall time: 1.51 ms
+Wall time: 0 ns
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11.793674623824684
@@ -496,7 +502,7 @@ Wall time: 1.51 ms
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
-<span class="n">logn</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">324723874328247000</span><span class="p">)</span>
+<span class="n">logn</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">3247238743282470000</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -505,12 +511,12 @@ Wall time: 1.51 ms
 Wall time: 0 ns
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.23180915170056
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.04452066099252
 </pre></div>
 </div>
 </div>
 </div>
-<p>Properties of logs tell us <span class="math notranslate nohighlight">\(\log_{17} 324723874328247000 = \log_{17} 324723874328247 + \log_{17} 1000\)</span>, so the added time should be negligible.</p>
+<p>Properties of logs tell us <span class="math notranslate nohighlight">\(\log_{17} 3247238743282470000 = \log_{17} 324723874328247 + \log_{17} 10000\)</span>, so the added time should be negligible.</p>
 <p>We will graph <span class="math notranslate nohighlight">\(y = 17^x\)</span> using Altair</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -640,23 +646,23 @@ Wall time: 0 ns
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-01b833e9392e4d369e643453c95ea69c.vega-embed {
+  #altair-viz-accd0d42eb2e455993fecd4264082eae.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-01b833e9392e4d369e643453c95ea69c.vega-embed details,
-  #altair-viz-01b833e9392e4d369e643453c95ea69c.vega-embed details summary {
+  #altair-viz-accd0d42eb2e455993fecd4264082eae.vega-embed details,
+  #altair-viz-accd0d42eb2e455993fecd4264082eae.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-01b833e9392e4d369e643453c95ea69c"></div>
+<div id="altair-viz-accd0d42eb2e455993fecd4264082eae"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-01b833e9392e4d369e643453c95ea69c") {
-      outputDiv = document.getElementById("altair-viz-01b833e9392e4d369e643453c95ea69c");
+    if (outputDiv.id !== "altair-viz-accd0d42eb2e455993fecd4264082eae") {
+      outputDiv = document.getElementById("altair-viz-accd0d42eb2e455993fecd4264082eae");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -911,23 +917,23 @@ Wall time: 0 ns
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-a2ca88e9f3f541d48d388948aa97ba60.vega-embed {
+  #altair-viz-ffc6aeea15484d5ea68f18cb1918fe84.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-a2ca88e9f3f541d48d388948aa97ba60.vega-embed details,
-  #altair-viz-a2ca88e9f3f541d48d388948aa97ba60.vega-embed details summary {
+  #altair-viz-ffc6aeea15484d5ea68f18cb1918fe84.vega-embed details,
+  #altair-viz-ffc6aeea15484d5ea68f18cb1918fe84.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-a2ca88e9f3f541d48d388948aa97ba60"></div>
+<div id="altair-viz-ffc6aeea15484d5ea68f18cb1918fe84"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-a2ca88e9f3f541d48d388948aa97ba60") {
-      outputDiv = document.getElementById("altair-viz-a2ca88e9f3f541d48d388948aa97ba60");
+    if (outputDiv.id !== "altair-viz-ffc6aeea15484d5ea68f18cb1918fe84") {
+      outputDiv = document.getElementById("altair-viz-ffc6aeea15484d5ea68f18cb1918fe84");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -1074,23 +1080,23 @@ Wall time: 0 ns
 <div class="cell_output docutils container">
 <div class="output text_html">
 <style>
-  #altair-viz-fe53845b1cb54ec194d042a7a7695f2b.vega-embed {
+  #altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0.vega-embed {
     width: 100%;
     display: flex;
   }
 
-  #altair-viz-fe53845b1cb54ec194d042a7a7695f2b.vega-embed details,
-  #altair-viz-fe53845b1cb54ec194d042a7a7695f2b.vega-embed details summary {
+  #altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0.vega-embed details,
+  #altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0.vega-embed details summary {
     position: relative;
   }
 </style>
-<div id="altair-viz-fe53845b1cb54ec194d042a7a7695f2b"></div>
+<div id="altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0"></div>
 <script type="text/javascript">
   var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-fe53845b1cb54ec194d042a7a7695f2b") {
-      outputDiv = document.getElementById("altair-viz-fe53845b1cb54ec194d042a7a7695f2b");
+    if (outputDiv.id !== "altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0") {
+      outputDiv = document.getElementById("altair-viz-c405bdfc8c1d4c4fbfa5b0ba0d40ffb0");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm/vega@5?noext",
@@ -1188,7 +1194,291 @@ Wall time: 0 ns
 </div>
 </div>
 </div>
-<p>Therefore, to make the discrete log problem as difficult as possible, we must pick a primitive root mod p for our base</p>
+<p>Therefore, to make the discrete log problem as difficult as possible, we must pick a primitive root mod p for our base.</p>
+</section>
+<section id="discrete-log-timing">
+<h2>Discrete log timing<a class="headerlink" href="#discrete-log-timing" title="Link to this heading">#</a></h2>
+<section id="method-1-brute-force">
+<h3>Method 1: Brute Force.<a class="headerlink" href="#method-1-brute-force" title="Link to this heading">#</a></h3>
+<p>We use naive powering to take every power of <span class="math notranslate nohighlight">\(g\)</span> and check if <span class="math notranslate nohighlight">\(g^x \equiv h \textnormal{ mod } p\)</span>.  The expected number of steps has order <span class="math notranslate nohighlight">\(\mathcal{O}(p)\)</span> in the worst case scenario.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DL_Brute</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Take every power x of base for x between 0 and p-1. Check whether ((base**r) % p) == (target %p). Return x if a solution is found, and None otherwise.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mi">12</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;exponent </span><span class="si">{</span><span class="mi">0</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="mi">0</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">base</span><span class="p">)</span> <span class="o">%</span> <span class="n">p</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;exponent </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">^</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2"> mod </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">h</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;found solution, exponent = </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No solution found&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DL_Brute</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>exponent 0: 3^0 = 1 mod 401
+exponent 1: 3^1 = 3 mod 401
+exponent 2: 3^2 = 9 mod 401
+exponent 3: 3^3 = 27 mod 401
+exponent 4: 3^4 = 81 mod 401
+exponent 5: 3^5 = 243 mod 401
+exponent 6: 3^6 = 328 mod 401
+exponent 7: 3^7 = 182 mod 401
+exponent 8: 3^8 = 145 mod 401
+exponent 9: 3^9 = 34 mod 401
+exponent 10: 3^10 = 102 mod 401
+exponent 11: 3^11 = 306 mod 401
+exponent 12: 3^12 = 116 mod 401
+exponent 13: 3^13 = 348 mod 401
+exponent 14: 3^14 = 242 mod 401
+exponent 15: 3^15 = 325 mod 401
+exponent 16: 3^16 = 173 mod 401
+exponent 17: 3^17 = 118 mod 401
+exponent 18: 3^18 = 354 mod 401
+exponent 19: 3^19 = 260 mod 401
+exponent 20: 3^20 = 379 mod 401
+exponent 21: 3^21 = 335 mod 401
+exponent 22: 3^22 = 203 mod 401
+exponent 23: 3^23 = 208 mod 401
+exponent 24: 3^24 = 223 mod 401
+exponent 25: 3^25 = 268 mod 401
+exponent 26: 3^26 = 2 mod 401
+exponent 27: 3^27 = 6 mod 401
+exponent 28: 3^28 = 18 mod 401
+exponent 29: 3^29 = 54 mod 401
+exponent 30: 3^30 = 162 mod 401
+exponent 31: 3^31 = 85 mod 401
+exponent 32: 3^32 = 255 mod 401
+exponent 33: 3^33 = 364 mod 401
+exponent 34: 3^34 = 290 mod 401
+exponent 35: 3^35 = 68 mod 401
+exponent 36: 3^36 = 204 mod 401
+exponent 37: 3^37 = 211 mod 401
+exponent 38: 3^38 = 232 mod 401
+exponent 39: 3^39 = 295 mod 401
+exponent 40: 3^40 = 83 mod 401
+exponent 41: 3^41 = 249 mod 401
+exponent 42: 3^42 = 346 mod 401
+exponent 43: 3^43 = 236 mod 401
+exponent 44: 3^44 = 307 mod 401
+exponent 45: 3^45 = 119 mod 401
+exponent 46: 3^46 = 357 mod 401
+exponent 47: 3^47 = 269 mod 401
+exponent 48: 3^48 = 5 mod 401
+exponent 49: 3^49 = 15 mod 401
+exponent 50: 3^50 = 45 mod 401
+exponent 51: 3^51 = 135 mod 401
+exponent 52: 3^52 = 4 mod 401
+exponent 53: 3^53 = 12 mod 401
+found solution, exponent = 53
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>53
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DL_Brute</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">401</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No solution found
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">nextprime</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">7</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">DL_Brute</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10000019
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 3866671
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3866671
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">nextprime</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">8</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="n">DL_Brute</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100000007
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 15137028
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15137028
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nextprime</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">DL_Brute</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;prime: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, time = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>No solution found
+prime: 101, time = 0.0
+found solution, exponent = 299
+prime: 1009, time = 0.0
+found solution, exponent = 9340
+prime: 10007, time = 0.006749868392944336
+found solution, exponent = 56943
+prime: 100003, time = 0.03153634071350098
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 884389
+prime: 1000003, time = 0.48421788215637207
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 3866671
+prime: 10000019, time = 1.4129316806793213
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 15137028
+prime: 100000007, time = 2.764096260070801
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>found solution, exponent = 647914256
+prime: 1000000007, time = 162.30786991119385
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">647914256</span><span class="o">/</span><span class="mi">15137028</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>42.80326732565997
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">320.9372215270996</span><span class="o">/</span><span class="mf">6.45593523979187</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49.711964201401464
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">3866671</span><span class="o">/</span><span class="mi">884389</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.372138278517711
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mf">1.5584545135498047</span><span class="o">/</span><span class="mf">0.44783735275268555</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.4799565153968928
+</pre></div>
+</div>
+</div>
+</div>
+<p>Moral: Worst-case scaling is based on the size of p, but not all solutions are found in worst-case timing.</p>
+</section>
+<section id="method-2-trial-and-error">
+<h3>Method 2: Trial and Error<a class="headerlink" href="#method-2-trial-and-error" title="Link to this heading">#</a></h3>
+<p>We pick an exponent x at random from 0 to p-1, and use fast powering to check if <span class="math notranslate nohighlight">\(g^x \equiv h \textnormal{ mod } p\)</span>.  The expected number of steps has order <span class="math notranslate nohighlight">\(\mathcal{O}\left((\log_2{x})^2p\right)\)</span> in the worst case scenario. Our attempt to use fast powering by trial and error should be worse than brute force on average!</p>
+<p>We’ll leave this as an exercise for now. I’ve included the fast-powering function from Week 1. Remember to sample powers without replacement!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fast_powering</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">exponent</span><span class="p">,</span> <span class="n">modulo</span><span class="p">):</span>
+    <span class="n">pow_limit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">emath</span><span class="o">.</span><span class="n">logn</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">exponent</span><span class="p">))</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">base</span>
+    <span class="n">pow_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pow_limit</span><span class="p">)):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">a</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">%</span><span class="k">modulo</span>
+        <span class="n">pow_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">current_exp</span> <span class="o">=</span> <span class="n">exponent</span> <span class="o">-</span> <span class="mi">2</span><span class="o">**</span><span class="n">pow_limit</span>
+    <span class="n">pow_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pows_left</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">pow_limit</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">pows_left</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">current_exp</span> <span class="o">&gt;=</span> <span class="n">x</span><span class="p">:</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">pow_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">%</span><span class="k">modulo</span>
+            <span class="n">current_exp</span> <span class="o">=</span> <span class="n">current_exp</span><span class="o">-</span><span class="n">x</span>
+        <span class="n">pow_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-3-shank-s-collision-algorithm">
+<h3>Method 3: Shank’s Collision Algorithm<a class="headerlink" href="#method-3-shank-s-collision-algorithm" title="Link to this heading">#</a></h3>
+<p>See The Week 3 python notes for more details!</p>
+</section>
 </section>
 </section>
 
@@ -1260,6 +1550,12 @@ Wall time: 0 ns
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-real-number-logarithms">Properties of real-number logarithms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#primitive-roots-and-discrete-log">Primitive roots and Discrete Log</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-log-when-our-base-is-not-a-primitive-root">Discrete log when our base is not a primitive root</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-log-timing">Discrete log timing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1-brute-force">Method 1: Brute Force.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-trial-and-error">Method 2: Trial and Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3-shank-s-collision-algorithm">Method 3: Shank’s Collision Algorithm</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
